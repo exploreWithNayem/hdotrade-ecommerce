@@ -6,7 +6,7 @@ import { FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 export default function ImageBanners() {
   return (
-    <section className="w-[80%] mx-auto px-4 py-10 space-y-6">
+    <section className="w-[100%] mx-auto px-4 py-10 space-y-6">
       {/* Banner 1 - with both buttons bottom-left */}
       <div className="w-full h-[600px] relative overflow-hidden rounded-xl shadow">
         <Image

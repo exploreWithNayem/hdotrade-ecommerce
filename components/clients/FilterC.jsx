@@ -2,9 +2,9 @@ import React from "react";
 
 export default function FilterC() {
   return (
-    <div className="w-full flex justify-center items-center py-[70px] bg-[#FFFFFF]">
+    <div className="w-full flex justify-center items-center py-[50px] bg-[#FFFFFF]">
       {/* parent container */}
-      <div className="w-[80%] flex flex-col md:flex-row justify-center gap-4 border border-[#00000033 rounded-[35px] p-4">
+      <div className="w-[100%] flex flex-col md:flex-row justify-center gap-4 border border-[#00000033 rounded-[35px] p-4">
         {/* Selector 1 */}
         <select
           name="manufacturer"

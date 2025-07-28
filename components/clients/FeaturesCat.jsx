@@ -41,7 +41,7 @@ export default function FeaturedCategories() {
   ];
 
   return (
-    <section className="w-[80%] mx-auto px-4 py-12">
+    <section className="w-[100%] mx-auto px-4 py-12">
       <h2 className="text-2xl md:text-3xl font-semibold text-center mb-12">
         Featured Categories
       </h2>

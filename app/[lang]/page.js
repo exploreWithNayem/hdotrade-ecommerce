@@ -17,7 +17,7 @@ export default async function Home(props) {
   const language = await getLang(lang);
 
   return (
-    <>
+    <div className="w-[70%] justify-center mx-auto">
       <FilterC />
       <Banner lanCode={lang} heroLang={language?.home?.hero} />
       {/* <Feature featureLang={language?.home?.feature} /> */}
@@ -35,6 +35,6 @@ export default async function Home(props) {
       <Suspense fallback={<h1> Loading....................</h1>}>
         <TrendingProducts langCode={lang} trendLang={language} />
       </Suspense>
-    </>
+    </div>
   );
 }

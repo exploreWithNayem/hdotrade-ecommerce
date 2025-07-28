@@ -46,16 +46,16 @@ export default function AddCard({
       {detail ? (
         <button
           onClick={handleClick}
-          className="bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition"
+          className="font-bold text-[16px] text-white bg-red-600 rounded-full py-3 cursor-pointer"
         >
           <i className="fa-solid fa-bag-shopping"></i> {lan}
         </button>
       ) : (
         <button
           onClick={handleClick}
-          className="block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition"
+          className="font-bold text-[16px] text-white bg-red-600 rounded-full py-3 cursor-pointer"
         >
-          {lan}
+          Add To Cart
         </button>
       )}
     </>

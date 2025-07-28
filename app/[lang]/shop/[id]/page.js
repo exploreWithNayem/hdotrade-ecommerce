@@ -1,17 +1,13 @@
 import { auth } from "@/auth";
-import Detail from "@/components/detailProduct/Detail";
-import ProductDescription from "@/components/detailProduct/ProductDescription";
+import ProductPage from "@/components/clients/ProductCartC";
 import RelatedProduct from "@/components/detailProduct/RelatedProduct";
-import Breadcrumb from "@/components/shop/Breadcrumb";
 import { getProductById, getUserByMail } from "@/database/queries";
 import { getLang } from "@/languages/dynamicLangSwitch";
 
 export async function generateMetadata(props) {
   const params = await props.params;
 
-  const {
-    id
-  } = params;
+  const { id } = params;
 
   const product = await getProductById(id);
 
@@ -32,10 +28,7 @@ export async function generateMetadata(props) {
 export default async function page(props) {
   const params = await props.params;
 
-  const {
-    id,
-    lang
-  } = params;
+  const { id, lang } = params;
 
   const product = await getProductById(id);
   const session = await auth();
@@ -44,14 +37,14 @@ export default async function page(props) {
 
   return (
     <>
-      <Breadcrumb pageName={lan?.detail?.page} />
-      <Detail userId={user?.id} product={product} lan={lan?.detail} />
-      <ProductDescription lan={lan?.detail} />
-      <RelatedProduct
-        category={product?.category}
-        lan={lan?.detail?.related}
-        langCode={lang}
-      />
+      <div>
+        <ProductPage product={product} />
+        <RelatedProduct
+          category={product?.category}
+          lan={lan?.detail?.related}
+          langCode={lang}
+        />
+      </div>
     </>
   );
 }

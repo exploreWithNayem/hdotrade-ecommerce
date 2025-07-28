@@ -1,58 +1,141 @@
-import Link from "next/link";
+import { FiPhone } from "react-icons/fi";
+import { HiOutlineMail } from "react-icons/hi";
+import { IoLocationOutline } from "react-icons/io5";
 
 export default function page() {
   return (
     <>
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center text-center px-4">
-        {/* Logo Section */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-bold text-red-500">
-            N<span className="text-gray-800">KART</span>
-          </h1>
-        </div>
-
-        {/* Main Content */}
-        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-          <div className="relative mb-6">
-            <div className="w-24 h-24 bg-primary rounded-full animate-bounce mx-auto"></div>
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-24 h-24 bg-white border-4 border-gray-200 rounded-full"></div>
+      <div className="max-w-[1280px] mx-auto px-3">
+        <div className="my-20">
+          <div className="bg-gradient-to-b from-[#ff5b5f] to-[#e92231] py-20 px-28 rounded-3xl">
+            <h1
+              className="text-[64px] font-black text-white text-center "
+              style={{ textShadow: "0 6px 20px rgba(0, 0, 0, 0.6)" }}
+            >
+              If you need help, don't hesitate to contact our support team!
+            </h1>
           </div>
 
-          <h1 className="text-3xl font-bold text-primary mb-4">
-            Under Construction
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Our website is getting a makeover on some parts! We will be live soon with
-            exciting features and products.
-          </p>
+          {/* Card Content */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-20">
+            {/* Card 1 */}
+            <div className="bg-[#f4f3ef] rounded-xl">
+              <div className="flex items-center justify-center gap-2.5 py-4 border-b border-gray-300">
+                <span className="bg-red-600 p-1.5 rounded-[8px]">
+                  <FiPhone className="text-xl text-white" />
+                </span>
+                <p className="text-xl font-bold">Number</p>
+              </div>
+
+              <div className="flex flex-col items-center justify-center py-28 space-y-4 text-left">
+                <p className=" text-[16px] font-bold text-red-600">
+                  <span className="text-[#767778]">WhatsApp</span> +351
+                  927408959
+                </p>
+                <p className=" text-[16px] font-bold text-red-600">
+                  <span className="text-[#767778]">Office number</span> +351
+                  275335326
+                </p>
+                <p className=" text-[16px] font-bold text-red-600">
+                  <span className="text-[#767778]">Mob office</span> +351
+                  927408959
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-[#f4f3ef] rounded-xl">
+              <div className="flex items-center justify-center gap-2.5 py-4 border-b border-gray-300">
+                <span className="bg-red-600 p-1.5 rounded-[8px]">
+                  <HiOutlineMail className="text-xl text-white" />
+                </span>
+                <p className="text-xl font-bold">Email Us</p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 pt-[26px] px-[70px]">
+                {/* Side 1 */}
+                <div className="space-y-4">
+                  <p className=" text-[16px] font-bold text-red-600">
+                    <span className="text-[#767778]">Import Department -</span>{" "}
+                    import@hdotrade.com
+                  </p>
+                  <p className=" text-[16px] font-bold text-red-600">
+                    <span className="text-[#767778]">
+                      Sales Department Global -
+                    </span>{" "}
+                    sales@hdotrade.com
+                  </p>
+                  <p className=" text-[16px] font-bold text-red-600">
+                    <span className="text-[#767778]">
+                      Sales Department Europ -
+                    </span>{" "}
+                    sales@Hdotrade.pt
+                  </p>
+                </div>
+                {/* Side 2 */}
+                <div className="space-y-4">
+                  <p className=" text-[16px] font-bold text-red-600">
+                    <span className="text-[#767778]">
+                      Sccountancy Department Global -
+                    </span>{" "}
+                    accountancy@hdotrade.com
+                  </p>
+                  <p className=" text-[16px] font-bold text-red-600">
+                    <span className="text-[#767778]">
+                      Accountancy Department Europ -
+                    </span>{" "}
+                    accountancy@hdotrade.pt
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-20">
+            {/* Side 1 */}
+            <div className="bg-[#f4f3ef] rounded-xl">
+              <div className="flex items-center justify-center gap-2.5 py-4 border-b border-gray-300">
+                <span className="bg-red-600 p-1.5 rounded-[8px]">
+                  <IoLocationOutline className="text-xl text-white" />
+                </span>
+                <p className="text-xl font-bold">
+                  Offices, warehouse, physical store
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center justify-center pt-4 pb-7 space-y-4 text-center">
+                <p className="text-[16px] font-bold text-[#767779]">
+                  Quinta das rosas lote 3 RC Esq 6200-551 Covilha Portugal
+                </p>
+                <p className="text-[16px] font-bold text-[#767779]">
+                  warehouse - rua de espinho santo peraboa covilha <br />
+                  portugalimport@hdotrade.com
+                </p>
+              </div>
+            </div>
+            {/* Side 2 */}
+            <div className="bg-[#f4f3ef] rounded-xl">
+              <div className="flex items-center justify-center gap-2.5 py-4 border-b border-gray-300">
+                <span className="bg-red-600 p-1.5 rounded-[8px]">
+                  <FiPhone className="text-xl text-white" />
+                </span>
+                <p className="text-xl font-bold">Office Hours</p>
+              </div>
+
+              <div className="flex flex-col items-center justify-center text-center">
+                <p className="text-[16px] font-bold text-red-600 py-11">
+                  Monday - Friday 9 AM - 6 PM
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-6 text-gray-500">
-          <p>Follow us for updates:</p>
-          <div className="flex justify-center gap-4 mt-2">
-            <Link
-              href="#"
-              className="text-red-500 hover:text-red-600 transition"
-              aria-label="Twitter"
-            >
-              <i className="fab fa-twitter fa-lg"></i>
-            </Link>
-            <Link
-              href="#"
-              className="text-red-500 hover:text-red-600 transition"
-              aria-label="Facebook"
-            >
-              <i className="fab fa-facebook fa-lg"></i>
-            </Link>
-            <Link
-              href="#"
-              className="text-red-500 hover:text-red-600 transition"
-              aria-label="Instagram"
-            >
-              <i className="fab fa-instagram fa-lg"></i>
-            </Link>
-          </div>
+        <div className="mb-20">
+          <img
+            className="rounded-2xl"
+            src="https://i.ibb.co/4wJNnNfp/616abdd005afd9a4d2249d68deb39bcb4e2a00a2.png"
+            alt="Product Image"
+          />
         </div>
       </div>
     </>
