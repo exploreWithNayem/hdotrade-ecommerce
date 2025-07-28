@@ -108,7 +108,7 @@ const ProductPage = ({ product }) => {
         <div className="pt-7 lg:pt-0">
           <button className="flex items-center justify-center gap-2 w-full border border-red-600 py-3 font-bold text-[16px] rounded-full cursor-pointer mb-3.5">
             <FaWhatsapp className="text-green-500 text-[16px]" /> Send message
-            on What's app
+            on Whats App
           </button>
           <button className="flex items-center justify-center gap-2 w-full border border-red-600 py-3 font-bold text-[16px] rounded-full cursor-pointer">
             <SiGmail className="text-orange-400 text-[16px]" /> Send message on

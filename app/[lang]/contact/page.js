@@ -1,3 +1,5 @@
+
+
 import { FiPhone } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
@@ -7,9 +9,9 @@ export default function page() {
     <>
       <div className="max-w-[1280px] mx-auto px-3">
         <div className="my-20">
-          <div className="bg-gradient-to-b from-[#ff5b5f] to-[#e92231] py-20 px-28 rounded-3xl">
+          <div className="bg-gradient-to-b from-[#ff5b5f] to-[#e92231] lg:py-20 py-12 px-6 lg:px-28 rounded-3xl">
             <h1
-              className="text-[64px] font-black text-white text-center "
+              className="text-4xl md:text-[64px] font-black text-white text-center"
               style={{ textShadow: "0 6px 20px rgba(0, 0, 0, 0.6)" }}
             >
               If you need help, don't hesitate to contact our support team!
@@ -17,7 +19,7 @@ export default function page() {
           </div>
 
           {/* Card Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-20">
             {/* Card 1 */}
             <div className="bg-[#f4f3ef] rounded-xl">
               <div className="flex items-center justify-center gap-2.5 py-4 border-b border-gray-300">
@@ -52,7 +54,7 @@ export default function page() {
                 <p className="text-xl font-bold">Email Us</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 pt-[26px] px-[70px]">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 pt-[26px] py-10 px-[70px]">
                 {/* Side 1 */}
                 <div className="space-y-4">
                   <p className=" text-[16px] font-bold text-red-600">
@@ -93,7 +95,7 @@ export default function page() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-20">
             {/* Side 1 */}
             <div className="bg-[#f4f3ef] rounded-xl">
-              <div className="flex items-center justify-center gap-2.5 py-4 border-b border-gray-300">
+              <div className="flex items-center justify-center gap-2.5 py-4 px-3 border-b border-gray-300">
                 <span className="bg-red-600 p-1.5 rounded-[8px]">
                   <IoLocationOutline className="text-xl text-white" />
                 </span>
@@ -102,7 +104,7 @@ export default function page() {
                 </p>
               </div>
 
-              <div className="flex flex-col items-center justify-center pt-4 pb-7 space-y-4 text-center">
+              <div className="flex flex-col items-center justify-center pt-4 pb-7 space-y-4 text-center p-1.5 md:px-1">
                 <p className="text-[16px] font-bold text-[#767779]">
                   Quinta das rosas lote 3 RC Esq 6200-551 Covilha Portugal
                 </p>

@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const itemsPerPage = 9; // change to what fits your grid
 
-export default function ClientPaginatedProducts({ products, langCode, lan={} }) {
+export default function ClientPaginatedProducts({ products, langCode }) {
   const [currentPage, setCurrentPage] = useState(0);
 
   const pageCount = Math.ceil(products.length / itemsPerPage);

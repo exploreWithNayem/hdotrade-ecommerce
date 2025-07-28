@@ -70,24 +70,24 @@ export default function NavC() {
             </div>
             <div
               className="aws-search-btn aws-form-btn     flex
-    flex-col
-    justify-center
-    text-center
+                flex-col
+                justify-center
+                text-center
 
-    border
-    border-[#d8d8d8]
-    -ml-px
-    cursor-pointer
-    relative
-    whitespace-nowrap
-    select-none
-    transition-colors
-    duration-100
-    ease-in-out     w-[120px]
+                border
+                border-[#d8d8d8]
+                -ml-px
+                cursor-pointer
+                relative
+                whitespace-nowrap
+                select-none
+                transition-colors
+                duration-100
+                ease-in-out     w-[120px]
 
-    bg-red-500
-    rounded-tr-[20px]
-    rounded-br-[20px]"
+                bg-red-500
+                rounded-tr-[20px]
+                rounded-br-[20px]"
             >
               <span className="aws-search-btn_icon">
                 <svg

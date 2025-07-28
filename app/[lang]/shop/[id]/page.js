@@ -1,7 +1,6 @@
-import { auth } from "@/auth";
 import ProductPage from "@/components/clients/ProductCartC";
 import RelatedProduct from "@/components/detailProduct/RelatedProduct";
-import { getProductById, getUserByMail } from "@/database/queries";
+import { getProductById } from "@/database/queries";
 import { getLang } from "@/languages/dynamicLangSwitch";
 
 export async function generateMetadata(props) {
@@ -31,8 +30,6 @@ export default async function page(props) {
   const { id, lang } = params;
 
   const product = await getProductById(id);
-  const session = await auth();
-  const user = await getUserByMail(session?.user?.email);
   const lan = await getLang(lang);
 
   return (
