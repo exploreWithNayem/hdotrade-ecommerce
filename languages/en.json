@@ -1,0 +1,150 @@
+{
+  "headers": {
+    "logo": "en",
+    "search": "Search",
+    "wishlist": "Wishlist",
+    "card": "Card",
+    "account": "Account",
+    "login": "Login",
+    "logout": "Logout"
+  },
+
+  "navBar": {
+    "allcategory": "All Categories",
+    "home": "Home",
+    "shop": "Shop",
+    "about": "About us",
+    "contact": "Contact Us",
+    "login": "Login",
+    "logout": "Logout"
+  },
+
+  "home": {
+    "hero": {
+      "title": "Best Collection For Home Decoration",
+      "subtitle": "Transform Your Home with Timeless Elegance, Unmatched Comfort, Innovative Design, and Exceptional Craftsmanship",
+      "button": "Shop Now"
+    },
+    "feature": {
+      "shipping": "Free Shipping",
+      "order": "Order over $200",
+      "money": "Money Returns",
+      "return": "30 days money returns",
+      "support": "24/7 Support",
+      "customer": "Customer support"
+    },
+
+    "category": "SHOP BY CATEGORY",
+    "new": "TOP NEW ARRIVAL",
+    "trend": "TRENDING PRODUCTS"
+  },
+
+  "shop": {
+    "category": "CATEGORIES",
+    "price": "PRICE",
+    "size": "SIZE",
+    "addCard": "Add to Cart",
+    "noCart": "No Cart Added",
+    "addCartlist": "Please add your cart",
+    "noWish": "No wishlist Added",
+    "addWishlist": "Please add your wishlist",
+    "proceed": "Proceed to Checkout",
+    "noResult": "No Results Found",
+    "noResultExplain": "Try changing your search criteria"
+  },
+
+  "detail": {
+    "page": "PRODUCT DETAILS",
+    "availabile": "Availability",
+    "brand": "Brand",
+    "category": "Category",
+    "SKU": "SKU",
+    "size": "Available sizes",
+    "quantity": "QUANTITY",
+    "detail": "Product details",
+    "related": "RELATED PRODUCTS",
+    "addcart": "Add To Cart",
+    "wish": "Wishlist"
+  },
+
+  "logins": {
+    "title": "Login",
+    "subtitle": "Welcome back customer",
+    "email": "Email Address",
+    "password": "Password",
+    "remember": "Remember me",
+    "forgot": "Forgot password?",
+    "signup": "OR SIGNUP WITH",
+    "notHaveAccount": "Dont have account?",
+    "register": "Register"
+  },
+
+  "register": {
+    "title": "CREATE AN ACCOUNT",
+    "subtitle": "Register for new cosutumer",
+    "name": "Full Name",
+    "email": "Email Address",
+    "password": "Password",
+    "ConfPassword": "Confirm password",
+    "conditionTitlel": "I have read and agree to the",
+    "condition": "terms & conditions",
+    "create": "CREATE ACCOUNT",
+    "haveAccount": "Already have account?",
+    "login": "Login Now"
+  },
+
+  "account": {
+    "page": "Account",
+    "personal": "Personal Profile",
+    "edit": "Edit",
+    "shipping": "Shipping address",
+    "bill": "Billing Address",
+    "title": "UPDATE ACCOUNT",
+    "subtitle": "Provide valid data",
+    "name": " Full Name",
+    "phone": "Phone Number",
+    "update": "Update"
+  },
+
+  "billShip": {
+    "shipTitle": "UPDATE SHIPPING ADDRESS",
+    "billTitle": "UPDATE BILLING ADDRESS",
+    "subtitle": "Provide valid data",
+    "city": "City",
+    "house": "House Name/ Number",
+    "post": "Post Code",
+    "phone": "Phone Number",
+    "update": "UPDATE"
+  },
+
+  "footer": {
+    "copyRight": "©NKART - All Right Reserved",
+    "text": "Transform Your Home with Timeless Elegance and Unmatched Comfort",
+    "solution": "SOLUTIONS",
+    "support": "SUPPORT",
+    "links": "USEFUL LINKS",
+    "company": "COMPANY",
+    "marketing": "Marketing",
+    "analytics": "Analytics",
+    "commerce": "Commerce",
+    "insights": "Insights",
+    "pricing": "Pricing",
+    "documentation": "Documentation",
+    "guides": "Guides",
+    "api": "API Status",
+    "account": "Account",
+    "offer": "Special Offers",
+    "careers": "careers",
+    "privacy": "Privacy Policy",
+    "condition": "Terms and Conditions",
+    "service": "Services",
+    "beauty": "Beauty"
+  },
+
+  "about": {
+    "title": "Who We Are",
+    "description": "Welcome to NKART, your trusted online marketplace. We are passionate about connecting people with the best products and brands at unbeatable prices. Our journey started in 2024, and since then, we’ve been committed to providing a seamless shopping experience. With a wide variety of products and an easy-to-use platform, we aim to make online shopping enjoyable and accessible to everyone.",
+    "missionTitle": "Our Mission",
+    "missions": "Our mission is to revolutionize the eCommerce experience by prioritizing: Customer satisfaction through exceptional service. A curated selection of quality products.Affordable pricing and secure transactions."
+  }
+}
