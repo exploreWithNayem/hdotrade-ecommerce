@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function Search({ searchLan, langCode }) {
+export default function Search({ langCode }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const [searchValue, setSearchValue] = useState("");
