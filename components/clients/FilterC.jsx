@@ -2,13 +2,13 @@ import React from "react";
 
 export default function FilterC() {
   return (
-    <div className="w-full flex justify-center items-center py-[50px] bg-[#FFFFFF]">
+    <div className="w-[1279px] mx-auto flex justify-center items-center py-[50px]  bg-[#f7f7f7]">
       {/* parent container */}
-      <div className="w-[100%] flex flex-col md:flex-row justify-center gap-4 border border-[#00000033 rounded-[35px] p-4">
+      <div className="w-[100%] h-[81px] bg-[#ffffff] flex flex-col md:flex-row justify-center gap-4 border border-[#00000033 rounded-[35px] p-4 ">
         {/* Selector 1 */}
         <select
           name="manufacturer"
-          className="border border-[#00000033] px-4 md:px-6 py-1 text-[14px] md:text-[14px] rounded-[35px] focus:outline-none focus:border-gray-500 flex-1"
+          className="border border-[#00000033] px-4 md:px-6 py-1 text-[14px] md:text-[14px] rounded-[72px] focus:outline-none focus:border-gray-500 flex-1"
         >
           <option value="">SELECT MANUFACTURER</option>
         </select>

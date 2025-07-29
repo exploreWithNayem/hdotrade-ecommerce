@@ -30,7 +30,7 @@ const slides = [
 
 export default function Banner() {
   return (
-    <div className="w-[100%] mx-auto px-4">
+    <div className="w-[1260px] h-[429px] mx-auto px-4">
       <Swiper
         modules={[Autoplay]}
         spaceBetween={20}

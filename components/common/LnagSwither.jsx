@@ -57,7 +57,11 @@ export default function LanguageSwitcher() {
       >
         <i className="fa-solid fa-globe"></i>
         {language?.title}
+
+          <i className="fa-solid fa-angle-down"></i>
+  
       </div>
+
       {show && (
         <div
           className="absolute right-0 top-full mt-2 w-40 rounded-md bg-white dark:bg-[#ffffff] p-2 z-10 shadow-lg"

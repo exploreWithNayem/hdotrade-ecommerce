@@ -41,23 +41,23 @@ export default function FeaturedCategories() {
   ];
 
   return (
-    <section className="w-[100%] mx-auto px-4 py-12">
-      <h2 className="text-2xl md:text-3xl font-semibold text-center mb-12">
-        Featured Categories
+    <section className="w-[1276px] mx-auto  py-12">
+      <h2 className="text-center font-[700] text-[#1A1D21] text-[32px] md:text-[48px] mb-8">
+         Featured Categories
       </h2>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 md:gap-8 justify-items-center">
         {categories.map((cat, index) => (
           <div key={index} className="flex flex-col items-center text-center">
             <div
-              className={`w-24 h-24 md:w-28 md:h-28 rounded-full ${cat.color} flex items-center justify-center overflow-hidden`}
+              className={` lg:h-[184px] lg:w-[184px] md:w-28 md:h-28 rounded-full ${cat.color} flex items-center justify-center overflow-hidden`}
             >
               <Image
                 src={cat.img}
                 alt={cat.name}
-                className="w-14 h-14 object-contain"
-                width={100}
-                height={100}
+                className="object-contain"
+                width={130}
+                height={130}
               />
             </div>
             <p className="mt-2 text-xs md:text-sm">{cat.name}</p>

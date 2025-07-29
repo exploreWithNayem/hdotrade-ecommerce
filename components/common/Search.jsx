@@ -22,7 +22,7 @@ export default function Search({ searchLan, langCode }) {
     <div className="w-full max-w-xl flex relative">
       {/* "All" part */}
       <div className="flex items-center px-4 bg-gray-100 border border-gray-500 border-r-0 rounded-l-[20px]">
-        <span className="text-gray-500 text-base">All</span>
+        <span className="text-[#1a1d21] text-base">All</span>
       </div>
 
       {/* Search input */}
