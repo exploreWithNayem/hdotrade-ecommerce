@@ -8,7 +8,6 @@ import Banner from "@/components/home/Banner";
 
 import { getLang } from "@/languages/dynamicLangSwitch";
 
-
 export default async function Home(props) {
   const params = await props.params;
 
@@ -16,13 +15,12 @@ export default async function Home(props) {
   const language = await getLang(lang);
 
   return (
-    <div className="w-[1440px] justify-center mx-auto bg-[#f7f7f7]">
+    <div className="w-full max-w-[1440px] mx-auto bg-[#f7f7f7] px-4">
       <FilterC />
       <Banner lanCode={lang} heroLang={language?.home?.hero} />
       <ImageBanners />
       <ButtonImg />
       <FeaturedCategories />
-
       <Banner2 />
       <OurBrand />
     </div>

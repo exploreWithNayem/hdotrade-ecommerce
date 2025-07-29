@@ -19,7 +19,7 @@ export default function Search({ searchLan, langCode }) {
   };
 
   return (
-    <div className="w-full max-w-xl flex relative">
+    <div className="w-full sm:w-[300px] xl:w-[616px] max-w-xl flex relative">
       {/* "All" part */}
       <div className="flex items-center px-4 bg-gray-100 border border-gray-500 border-r-0 rounded-l-[20px]">
         <span className="text-[#1a1d21] text-base">All</span>
