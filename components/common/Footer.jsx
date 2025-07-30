@@ -29,8 +29,12 @@ export default function Footer() {
               height={90}
               className="mb-4"
             />
-            <p>Quinta dos Loios lote 3 3C Esq, 6200-131 Covilha, Portugal</p>
-            <p className="mt-2 font-semibold">Follow us</p>
+
+            <p className="text-[14px]">
+              {" "}
+              Quinta das rosas lote 3 R/C Esq, 6200-551 Covilhã, Portugal
+            </p>
+            <p className="mt-2 text-[16px]">Follow us</p>
             <div className="flex space-x-4 mt-2">
               <a href="#">
                 <FbIcon />
@@ -85,53 +89,55 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="bg-red-700 py-4 text-sm">
+      <div className="bg-[#e91325] py-4 text-sm">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
           <div>Copyright © HDOGLOBALTRADE · 2020</div>
-          <div className="flex items-center py-4 space-x-2">
-            <span>We accept</span>
-            <Image
-              src={payment1}
-              alt="Visa"
-              className="h-5"
-              width={40}
-              height={60}
-            />
-            <Image
-              src={payment2}
-              alt="Visa"
-              className="h-5"
-              width={40}
-              height={60}
-            />
-            <Image
-              src={payment3}
-              alt="Visa"
-              className="h-5"
-              width={40}
-              height={60}
-            />
-            <Image
-              src={payment4}
-              alt="Visa"
-              className="h-5"
-              width={40}
-              height={60}
-            />
-            <Image
-              src={payment5}
-              alt="Visa"
-              className="h-5"
-              width={40}
-              height={60}
-            />
-            <Image
-              src={payment6}
-              alt="Visa"
-              className="h-5"
-              width={40}
-              height={60}
-            />
+          <div className="">
+            <span className="text-start sm:text-center">We accept</span>
+            <div className="flex  items-center py-4 space-x-2">
+              <Image
+                src={payment1}
+                alt="Visa"
+                className="h-5"
+                width={50}
+                height={60}
+              />
+              <Image
+                src={payment2}
+                alt="Visa"
+                className="h-5"
+                width={50}
+                height={60}
+              />
+              <Image
+                src={payment3}
+                alt="Visa"
+                className="h-5"
+                width={50}
+                height={60}
+              />
+              <Image
+                src={payment4}
+                alt="Visa"
+                className="h-5"
+                width={50}
+                height={60}
+              />
+              <Image
+                src={payment5}
+                alt="Visa"
+                className="h-5"
+                width={50}
+                height={60}
+              />
+              <Image
+                src={payment6}
+                alt="Visa"
+                className="h-5"
+                width={50}
+                height={60}
+              />
+            </div>
           </div>
         </div>
       </div>

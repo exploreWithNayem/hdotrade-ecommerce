@@ -22,10 +22,9 @@ export default function ClientPaginatedProducts({ products, langCode }) {
 
   return (
     <div className="col-span-3">
-      <div className="grid md:grid-cols-3 grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
         {currentItems.map((product) => (
           <ProductCard
-            // lan={lan?.addCard}
             langCode={langCode}
             key={product?.id}
             product={product}

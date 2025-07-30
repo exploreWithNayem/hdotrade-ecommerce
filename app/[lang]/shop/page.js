@@ -26,7 +26,7 @@ export default async function page(props) {
 
   const lan = await getLang(lang);
   return (
-    <div className="w-[70%] justify-center mx-auto">
+    <div className="w-full max-w-[1440px] mx-auto bg-[#f7f7f7] px-4">
       <div className="container pt-4 pb-16 items-start">
         <FilterC />
         <Suspense fallback={<Loading />}>
