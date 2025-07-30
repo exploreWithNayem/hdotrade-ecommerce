@@ -1,17 +1,9 @@
-import { getLang } from "@/languages/dynamicLangSwitch";
 import Image from "next/image";
 import about1 from "@/public/client/logo.png";
 import mapImg from "@/public/client/map.jpg";
 import teamImg from "@/public/client/team.jpg";
 import PopularBrands from "@/components/clients/Brand";
-export default async function About(props) {
-  const params = await props.params;
-
-  const { lang } = params;
-
-  const lan = await getLang(lang);
-  const about = lan?.about;
-
+export default function About() {
   return (
     <>
       <div className="bg-white text-gray-800 font-sans">

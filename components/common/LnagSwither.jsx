@@ -58,8 +58,7 @@ export default function LanguageSwitcher() {
         <i className="fa-solid fa-globe"></i>
         {language?.title}
 
-          <i className="fa-solid fa-angle-down"></i>
-  
+        <i className="fa-solid fa-angle-down"></i>
       </div>
 
       {show && (

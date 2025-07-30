@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function NavC2() {
@@ -5,12 +6,12 @@ export default function NavC2() {
     <div className="drawer_wrapper fixed invisible z-10">
       <div className="drawer sm:w-auto w-full" id="navbar_drawer">
         <div className="flex items-center justify-between">
-          <a href="/">
+          <Link href="/">
             <img
               src="/wp-content/themes/hdotrade/assets/logo-B5U-EJGW.png"
               alt=""
             />
-          </a>
+          </Link>
           <button type="button" className="p-1" id="drawer_close">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -26,16 +27,16 @@ export default function NavC2() {
 
         <ul className="flex flex-col gap-10 my-6">
           <li className="nav_link text-lg">
-            <a href="/">Home</a>
+            <Link href="/">Home</Link>
           </li>
           <li className="nav_link text-lg">
-            <a href="/shop">Store</a>
+            <Link href="/shop">Store</Link>
           </li>
           <li className="nav_link text-lg">
-            <a href="/about">About us</a>
+            <Link href="/about">About us</Link>
           </li>
           <li className="nav_link text-lg">
-            <a href="/contact">Contact Us</a>
+            <Link href="/contact">Contact Us</Link>
           </li>
         </ul>
 

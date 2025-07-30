@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function NavC() {
   return (
     <nav className="navbar mb-4">
@@ -17,25 +19,25 @@ export default function NavC() {
           </svg>
         </button>
 
-        <a href="/" className="lg:block hidden min-w-24">
+        <Link href="/" className="lg:block hidden min-w-24">
           <img
             src="/wp-content/themes/hdotrade/assets/logo-B5U-EJGW.png"
             alt=""
           />
-        </a>
+        </Link>
 
         <ul className="gap-10 md:flex hidden">
           <li className="nav_link text-lg">
-            <a href="/">Home</a>
+            <Link href="/">Home</Link>
           </li>
           <li className="nav_link text-lg">
-            <a href="/shop">Store</a>
+            <Link href="/shop">Store</Link>
           </li>
           <li className="nav_link text-lg">
-            <a href="/about">About us</a>
+            <Link href="/about">About us</Link>
           </li>
           <li className="nav_link text-lg">
-            <a href="/contact">Contact Us</a>
+            <Link href="/contact">Contact Us</Link>
           </li>
         </ul>
 
@@ -160,38 +162,38 @@ export default function NavC() {
               id="language_list"
             >
               <div className="py-1" role="none">
-                <a
+                <Link
                   href="https://hdotrade.com/"
                   className="language_item block px-8 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabIndex="-1"
                 >
                   English (UK)
-                </a>
-                <a
+                </Link>
+                <Link
                   href="https://hdotrade.com/pt/"
                   className="language_item block px-8 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabIndex="-1"
                 >
                   Português
-                </a>
-                <a
+                </Link>
+                <Link
                   href="https://hdotrade.com/es/"
                   className="language_item block px-8 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabIndex="-1"
                 >
                   Español
-                </a>
-                <a
+                </Link>
+                <Link
                   href="https://hdotrade.com/fr/"
                   className="language_item block px-8 py-2 text-sm text-gray-700"
                   role="menuitem"
                   tabIndex="-1"
                 >
                   Français
-                </a>
+                </Link>
               </div>
             </div>
           </div>

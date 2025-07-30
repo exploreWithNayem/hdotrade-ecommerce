@@ -14,7 +14,7 @@ export default function page() {
               className="text-4xl md:text-[64px] font-black text-white text-center"
               style={{ textShadow: "0 6px 20px rgba(0, 0, 0, 0.6)" }}
             >
-              If you need help, don't hesitate to contact our support team!
+              If you need help, don&apos;t hesitate to contact our support team!
             </h1>
           </div>
 
