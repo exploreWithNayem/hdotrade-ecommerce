@@ -25,8 +25,8 @@ export default function Footer() {
             <Image
               src={logo}
               alt="HDO Logo"
-              width={80}
-              height={80}
+              width={90}
+              height={90}
               className="mb-4"
             />
             <p>Quinta dos Loios lote 3 3C Esq, 6200-131 Covilha, Portugal</p>
@@ -86,9 +86,9 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="bg-red-700 py-4 text-sm">
-        <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
           <div>Copyright © HDOGLOBALTRADE · 2020</div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center py-4 space-x-2">
             <span>We accept</span>
             <Image
               src={payment1}

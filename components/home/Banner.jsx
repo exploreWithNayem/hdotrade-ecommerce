@@ -30,7 +30,7 @@ const slides = [
 
 export default function Banner() {
   return (
-    <div className="w-[1260px] h-[429px] mx-auto px-4">
+    <div className="w-full max-w-[1260px] mx-auto px-4">
       <Swiper
         modules={[Autoplay]}
         spaceBetween={20}
@@ -41,27 +41,28 @@ export default function Banner() {
       >
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx}>
-            <div className="relative w-full h-[400px] rounded-xl overflow-hidden shadow">
-              {/* Background image */}
+            <div className="relative w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[429px] rounded-xl overflow-hidden shadow">
+              {/* Background Image */}
               <Image
                 src={slide.image}
                 alt={`Slide ${idx + 1}`}
                 fill
                 className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 1000px"
+                sizes="(max-width: 768px) 100vw, 1000px"
                 priority={idx === 0}
               />
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />
+              {/* Optional Dark Overlay */}
+              <div className="absolute inset-0 bg-black bg-opacity-40 sm:bg-opacity-50 z-10" />
 
-              {/* Text Block - from center to slight right */}
-              <div className="absolute inset-0 z-20 flex items-center justify-end">
+              {/* ✅ Text + Buttons - hidden on mobile */}
+              <div className="absolute inset-0 z-20 items-center justify-end hidden sm:flex">
                 <div className="mr-[18%] max-w-lg text-white text-right">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight text-left">
+           
+                  <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
                     {slide.title}
                   </h2>
-                  <div className="flex gap-4 justify-start flex-wrap">
+                  <div className="flex gap-4 justify-end">
                     <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition">
                       Shop Now
                     </button>
