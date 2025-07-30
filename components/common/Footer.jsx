@@ -20,7 +20,7 @@ export default function Footer() {
       {/* Top Section */}
       <div className="bg-[#061E3E] py-10">
         <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-4 gap-8 text-sm">
-          {/* Contact & Logo */}
+          {/* Contact and Logo */}
           <div>
             <Image
               src={logo}
