@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { AngelDownIcon, GlobalIcon } from "@/public/icons/icons";
 
 export default function LanguageSwitcher() {
   const pathName = usePathname();
@@ -48,17 +49,19 @@ export default function LanguageSwitcher() {
 
   return (
     <div
-      className="relative bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 px-2 inline-block"
+      className="relative bg-[#061e3e] rounded-lg backdrop-blur-[2px] p-1 px-2 inline-block"
       ref={dropdownRef} // Attach ref here
     >
       <div
         className="hover:text-primary flex items-center gap-2 text-white cursor-pointer"
         onMouseOver={() => setShow(true)} // Show dropdown when hovering over the trigger
       >
-        <i className="fa-solid fa-globe"></i>
+        {/* <i className="fa-solid fa-globe"></i> */}
+        <GlobalIcon />
         {language?.title}
 
-        <i className="fa-solid fa-angle-down"></i>
+        {/* <i className="fa-solid fa-angle-down"></i> */}
+        <AngelDownIcon/>
       </div>
 
       {show && (

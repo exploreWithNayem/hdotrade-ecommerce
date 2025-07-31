@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchIcon } from "@/public/icons/icons";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -43,7 +44,8 @@ export default function Search({ langCode }) {
         type="button"
         className="absolute right-2 top-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center hover:bg-red-600 transition-colors"
       >
-        <i className="fa-solid fa-magnifying-glass"></i>
+        {/* <i className="fa-solid fa-magnifying-glass"></i> */}
+        <SearchIcon/>
       </button>
     </div>
   );
