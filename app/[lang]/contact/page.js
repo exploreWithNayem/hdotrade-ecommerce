@@ -1,20 +1,31 @@
-
-
 import { FiPhone } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
-
+import ContactImg from "@/public/client/contact.png";
+import ContactImg2 from "@/public/client/contact2.png";
+import Image from "next/image";
 export default function page() {
   return (
     <>
       <div className="max-w-[1280px] mx-auto px-3">
         <div className="my-20">
-          <div className="bg-gradient-to-b from-[#ff5b5f] to-[#e92231] lg:py-20 py-12 px-6 lg:px-28 rounded-3xl">
+          <div
+            className="relative lg:py-20 py-12 px-6 lg:px-28 rounded-3xl max-h-[318px] overflow-hidden bg-gray-300"
+            style={{
+              backgroundImage: `url(${ContactImg.src})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-red-500/80"></div>
+
             <h1
-              className="text-4xl md:text-[64px] font-black text-white text-center"
+              className="relative text-[32px] md:text-[64px] leading-[1.2]  font-[900] text-white text-center"
               style={{ textShadow: "0 6px 20px rgba(0, 0, 0, 0.6)" }}
             >
-              If you need help, dont hesitate to contact our support team!
+              If you need help, don’t hesitate to contact our support team!
             </h1>
           </div>
 
@@ -23,7 +34,7 @@ export default function page() {
             {/* Card 1 */}
             <div className="bg-[#f4f3ef] rounded-xl">
               <div className="flex items-center justify-center gap-2.5 py-4 border-b border-gray-300">
-                <span className="bg-red-600 p-1.5 rounded-[8px]">
+                <span className="bg-[#e91325] p-1.5 rounded-[8px]">
                   <FiPhone className="text-xl text-white" />
                 </span>
                 <p className="text-xl font-bold">Number</p>
@@ -48,7 +59,7 @@ export default function page() {
             {/* Card 2 */}
             <div className="bg-[#f4f3ef] rounded-xl">
               <div className="flex items-center justify-center gap-2.5 py-4 border-b border-gray-300">
-                <span className="bg-red-600 p-1.5 rounded-[8px]">
+                <span className="bg-[#e91325]  p-1.5 rounded-[8px]">
                   <HiOutlineMail className="text-xl text-white" />
                 </span>
                 <p className="text-xl font-bold">Email Us</p>
@@ -96,7 +107,7 @@ export default function page() {
             {/* Side 1 */}
             <div className="bg-[#f4f3ef] rounded-xl">
               <div className="flex items-center justify-center gap-2.5 py-4 px-3 border-b border-gray-300">
-                <span className="bg-red-600 p-1.5 rounded-[8px]">
+                <span className="bg-[#e91325]  p-1.5 rounded-[8px]">
                   <IoLocationOutline className="text-xl text-white" />
                 </span>
                 <p className="text-xl font-bold">
@@ -117,7 +128,7 @@ export default function page() {
             {/* Side 2 */}
             <div className="bg-[#f4f3ef] rounded-xl">
               <div className="flex items-center justify-center gap-2.5 py-4 border-b border-gray-300">
-                <span className="bg-red-600 p-1.5 rounded-[8px]">
+                <span className="bg-[#e91325]  p-1.5 rounded-[8px]">
                   <FiPhone className="text-xl text-white" />
                 </span>
                 <p className="text-xl font-bold">Office Hours</p>
@@ -132,11 +143,13 @@ export default function page() {
           </div>
         </div>
 
-        <div className="mb-20">
-          <img
-            className="rounded-2xl"
-            src="https://i.ibb.co/4wJNnNfp/616abdd005afd9a4d2249d68deb39bcb4e2a00a2.png"
-            alt="Product Image"
+        <div className="mb-20 w-full max-w-[1280px] mx-auto">
+          <Image
+            src={ContactImg2}
+            width={1280}
+            height={832}
+            className="rounded-2xl w-full h-auto"
+            alt="contact img"
           />
         </div>
       </div>
