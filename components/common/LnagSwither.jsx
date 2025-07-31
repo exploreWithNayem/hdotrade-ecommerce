@@ -60,7 +60,6 @@ export default function LanguageSwitcher() {
         <GlobalIcon />
         {language?.title}
 
-        {/* <i className="fa-solid fa-angle-down"></i> */}
         <AngelDownIcon/>
       </div>
 
