@@ -4,7 +4,6 @@ import ReactPaginate from "react-paginate";
 import ProductCard from "../shop/ProductCard";
 import { useState } from "react";
 
-
 const itemsPerPage = 9; // change to what fits your grid
 
 export default function ClientPaginatedProducts({ products, langCode }) {
@@ -21,7 +20,7 @@ export default function ClientPaginatedProducts({ products, langCode }) {
   const currentItems = products.slice(offset, offset + itemsPerPage);
 
   return (
-    <div className="col-span-3">
+    <div className="col-span-3 max-w-[1280px] w-full mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
         {currentItems.map((product) => (
           <ProductCard

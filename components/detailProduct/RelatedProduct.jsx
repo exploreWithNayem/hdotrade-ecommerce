@@ -18,6 +18,7 @@ const RelatedProduct = async ({ category, langCode }) => {
                 key={product?.id}
                 product={product}
                 langCode={langCode}
+                relatedProduct={true}
               />
             ))}
           </div>
