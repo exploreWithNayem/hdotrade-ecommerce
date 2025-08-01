@@ -8,7 +8,7 @@ export default function ImageBanners() {
   return (
     <section className="w-full max-w-[1276px] mx-auto px-4 py-10 space-y-6">
       {/* Banner 1 - with buttons */}
-      <div className="w-full relative overflow-hidden rounded-xl shadow aspect-[16/9] sm:aspect-[3/1]">
+      <div className="w-full lg:h-[692px] relative overflow-hidden rounded-xl shadow aspect-[16/9] sm:aspect-[3/1]">
         <Image
           src={banner3}
           alt="Banner 1"
