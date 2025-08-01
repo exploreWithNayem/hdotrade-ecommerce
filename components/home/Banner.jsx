@@ -53,9 +53,9 @@ export default function Banner() {
               />
 
               {/* Optional Dark Overlay */}
-              <div className="absolute inset-0 bg-black bg-opacity-40 sm:bg-opacity-50 z-10" />
+              <div className="absolute inset-0  bg-opacity-40 sm:bg-opacity-50 z-10" />
 
-              {/* ✅ Text + Buttons - hidden on mobile */}
+              {/* Text + Buttons - hidden on mobile */}
               <div className="absolute inset-0 z-20 items-center justify-end hidden sm:flex">
                 <div className="mr-[18%] max-w-lg text-white text-right">
            
