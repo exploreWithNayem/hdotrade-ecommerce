@@ -53,20 +53,19 @@ export default function Banner() {
               />
 
               {/* Optional Dark Overlay */}
-              <div className="absolute inset-0  bg-opacity-40 sm:bg-opacity-50 z-10" />
+              <div className="absolute inset-0 bg-opacity-40 sm:bg-opacity-50 z-10" />
 
               {/* Text + Buttons - hidden on mobile */}
               <div className="absolute inset-0 z-20 items-center justify-end hidden sm:flex">
                 <div className="mr-[18%] max-w-lg text-white text-right">
-           
                   <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
                     {slide.title}
                   </h2>
                   <div className="flex gap-4 justify-end">
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition">
+                    <button className="bg-white hover:bg-blue-700 hover:text-white text-blue-600 px-6 py-2 rounded-md transition">
                       Shop Now
                     </button>
-                    <button className="bg-white text-blue-600 hover:bg-gray-100 px-6 py-2 rounded-md transition">
+                    <button className="bg-transparent text-white border border-white hover:bg-gray-100 hover:text-blue-700 px-6 py-2 rounded-md transition">
                       View More
                     </button>
                   </div>

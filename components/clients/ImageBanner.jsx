@@ -23,21 +23,21 @@ export default function ImageBanners() {
           <div className="flex flex-col items-center sm:items-start justify-center sm:justify-start gap-3 w-full">
             {/* WhatsApp Button */}
             <a
-              href="https://wa.me/your-number"
+              href="https://wa.me/8801609538714"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-green-700 text-white px-5 py-2 rounded-full font-medium hover:bg-green-700 transition w-full sm:w-[280px] text-sm sm:text-base"
             >
-              <FaWhatsapp className="text-lg" />
+              <FaWhatsapp className="text-lg text-white" />
               Send Message on WhatsApp
             </a>
 
             {/* Email Button */}
             <a
               href="mailto:your@email.com"
-              className="inline-flex items-center justify-center gap-2 bg-[#FFFFFF] text-[#000000] px-5 py-2 rounded-full font-medium hover:bg-blue-700 transition w-full sm:w-[280px] text-sm sm:text-base"
+              className="hover:text-white inline-flex items-center justify-center gap-2 bg-[#FFFFFF] text-[#000000] px-5 py-2 rounded-full font-medium hover:bg-blue-700 transition w-full sm:w-[280px] text-sm sm:text-base"
             >
-              <FaEnvelope className="text-lg" />
+              <FaEnvelope className="text-lg " />
               Send Message on Email
             </a>
           </div>
