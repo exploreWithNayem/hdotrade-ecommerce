@@ -22,7 +22,7 @@ export default function page() {
             <div className="absolute inset-0 bg-red-500/80"></div>
 
             <h1
-              className="relative text-[32px] md:text-[64px] leading-[1.2]  font-[900] text-white text-center"
+              className="relative text-[32px] md:text-[55px] leading-[1.2]  font-[900] text-white text-center"
               style={{ textShadow: "0 6px 20px rgba(0, 0, 0, 0.6)" }}
             >
               If you need help, don’t hesitate to contact our support team!
@@ -40,7 +40,7 @@ export default function page() {
                 <p className="text-xl font-bold">Number</p>
               </div>
 
-              <div className="flex flex-col items-center justify-center py-28 space-y-4 text-left">
+              <div className="flex flex-col items-center justify-center py-8 space-y-4 text-left">
                 <p className=" text-[16px] font-bold text-red-600">
                   <span className="text-[#767778]">WhatsApp</span> +351
                   927408959
