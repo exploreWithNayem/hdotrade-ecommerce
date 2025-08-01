@@ -7,11 +7,12 @@ import { FiMapPin } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import Image from "next/image";
+import Link from "next/link";
 
 const ProductPage = ({ product }) => {
   console.log(product);
   return (
-    <div className="max-w-[1280px] mx-auto px-3 pb-[40px]">
+    <div className="max-w-[1280px] mx-auto px-3 pb-[50px]">
       {/* Link Tab */}
       <div className="my-16 flex items-center gap-1">
         <p className="text-[16px]">Home</p>
@@ -83,7 +84,7 @@ const ProductPage = ({ product }) => {
                 Add to Cart
               </button>
               <button className="bg-red-600 rounded-full text-white font-bold text-[16px] cursor-pointer">
-                Shop now
+                <Link href="/en/checkout">Shop now</Link>
               </button>
             </div>
           </div>

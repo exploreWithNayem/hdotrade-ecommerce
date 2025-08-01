@@ -1,9 +1,9 @@
-import { auth } from "@/auth";
+// import { auth } from "@/auth";
 import ControllCheckout from "@/components/checkout/ControllCheckout";
 import Breadcrumb from "@/components/shop/Breadcrumb";
 import { getSummary } from "@/database/queries";
 import { getLang } from "@/languages/dynamicLangSwitch";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 export default async function page(props) {
   const params = await props.params;
@@ -13,11 +13,9 @@ export default async function page(props) {
   } = params;
 
   const lan = await getLang(lang);
-  const session = await auth();
+  // const session = await auth();
 
-  if (!session?.user) {
-    redirect("/login");
-  }
+
 
   const summery = await getSummary();
 

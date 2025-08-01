@@ -13,7 +13,7 @@ import ToastProvider from "@/providers/ToastProvider";
 import { cartCleanUp } from "@/database/queries";
 
 export const metadata = {
-  title: "Nkart - Home ",
+  title: "Hdotrade- Home",
   description:
     "Appropriately integrate technically sound value with scalable infomediaries negotiate sustainable strategic theme areas",
   openGraph: {

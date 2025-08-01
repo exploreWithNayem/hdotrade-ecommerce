@@ -1,8 +1,8 @@
 
-import { auth } from "@/auth";
+// import { auth } from "@/auth";
 import CardList from "@/components/addcard/CardList";
 import { getCardListData, getUserByMail } from "@/database/queries";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 export default async function page(props) {
   const params = await props.params;
@@ -11,12 +11,12 @@ export default async function page(props) {
     lang
   } = params;
 
-  const session = await auth();
-  if (!session) {
-    redirect(`/${lang}/login`);
-  }
+  // const session = await auth();
+  // if (!session) {
+  //   redirect(`/${lang}/login`);
+  // }
 
-  const user = await getUserByMail(session?.user?.email);
+  // const user = await getUserByMail(session?.user?.email);
 
   const listedProducts = await getCardListData(user?.id);
 
