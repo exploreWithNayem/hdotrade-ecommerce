@@ -11,7 +11,7 @@ import Image from "next/image";
 const ProductPage = ({ product }) => {
   console.log(product);
   return (
-    <div className="max-w-[1280px] mx-auto px-3">
+    <div className="max-w-[1280px] mx-auto px-3 pb-[40px]">
       {/* Link Tab */}
       <div className="my-16 flex items-center gap-1">
         <p className="text-[16px]">Home</p>

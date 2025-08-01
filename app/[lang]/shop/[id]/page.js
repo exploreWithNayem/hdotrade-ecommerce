@@ -35,6 +35,7 @@ export default async function page(props) {
   return (
     <>
       <div>
+        
         <ProductPage product={product} />
         <RelatedProduct
           category={product?.category}
