@@ -2,7 +2,7 @@ import React from "react";
 
 export default function FilterC() {
   return (
-    <div className="w-full max-w-[1279px] mx-auto flex justify-center items-center py-[50px] bg-[#f7f7f7]">
+    <div className="w-full max-w-[1279px] mx-auto flex justify-center items-center py-[50px] bg-[#ffffff]">
       {/* parent container */}
       <div className="w-full flex flex-col lg:flex-row justify-center items-center gap-4 border border-[#00000033] rounded-[15px] lg:rounded-[35px] p-4 bg-white">
         {/* Selector 1 */}

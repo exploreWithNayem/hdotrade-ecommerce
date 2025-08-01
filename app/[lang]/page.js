@@ -15,7 +15,7 @@ export default async function Home(props) {
   const language = await getLang(lang);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto bg-[#f7f7f7] px-4">
+    <div className="w-full max-w-[1440px] mx-auto bg-[#ffffff] px-4">
       <FilterC />
       <Banner lanCode={lang} heroLang={language?.home?.hero} />
       <ImageBanners />

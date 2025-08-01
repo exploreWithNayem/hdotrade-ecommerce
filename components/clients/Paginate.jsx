@@ -31,7 +31,7 @@ export default function ClientPaginatedProducts({ products, langCode }) {
         ))}
       </div>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-5">
         <ReactPaginate
           previousLabel="‹"
           nextLabel="›"
