@@ -26,7 +26,7 @@ export default function ImageBanners() {
               href="https://wa.me/your-number"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#E91325] text-white px-5 py-2 rounded-full font-medium hover:bg-green-700 transition w-full sm:w-[280px] text-sm sm:text-base"
+              className="inline-flex items-center justify-center gap-2 bg-green-700 text-white px-5 py-2 rounded-full font-medium hover:bg-green-700 transition w-full sm:w-[280px] text-sm sm:text-base"
             >
               <FaWhatsapp className="text-lg" />
               Send Message on WhatsApp

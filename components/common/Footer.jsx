@@ -18,23 +18,15 @@ export default function Footer() {
   return (
     <footer className="bg-red-600 text-white">
       {/* Top Section */}
-      <div className="bg-[#061E3E] py-10">
-        <div className="max-w-6xl mx-auto px-4 grid md:grid-cols-4 gap-8 text-sm">
-          {/* Contact and Logo */}
-          <div>
-            <Image
-              src={logo}
-              alt="HDO Logo"
-              width={90}
-              height={90}
-              className="mb-4"
-            />
-
-            <p className="text-[14px]">
-              {" "}
+      <div className="bg-[#061E3E] py-10 text-white">
+        <div className="max-w-[1440px] w-full  lg:justify-items-end mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
+          {/* Logo and Address */}
+          <div className="text-left mt-[-40px]">
+            <Image src={logo} alt="HDO Logo" width={110} height={110} />
+            <p className="text-[14px] leading-relaxed">
               Quinta das rosas lote 3 R/C Esq, 6200-551 Covilhã, Portugal
             </p>
-            <p className="mt-2 text-[16px]">Follow us</p>
+            <p className="mt-4 text-[16px] font-medium">Follow us</p>
             <div className="flex space-x-4 mt-2">
               <a href="#">
                 <FbIcon />
@@ -52,9 +44,9 @@ export default function Footer() {
           </div>
 
           {/* Product Links */}
-          <div>
-            <h4 className="font-semibold mb-2">Find Product</h4>
-            <ul className="space-y-1">
+          <div className="text-left">
+            <h4 className="font-semibold mb-2 text-[16px]">Find Product</h4>
+            <ul className="space-y-1 text-[14px]">
               <li>Dishwasher spare parts</li>
               <li>Vegetable cutter spare parts</li>
               <li>Juicer spare parts</li>
@@ -64,9 +56,9 @@ export default function Footer() {
           </div>
 
           {/* Help Links */}
-          <div>
-            <h4 className="font-semibold mb-2">Get help</h4>
-            <ul className="space-y-1">
+          <div className="text-left">
+            <h4 className="font-semibold mb-2 text-[16px]">Get help</h4>
+            <ul className="space-y-1 text-[14px]">
               <li>About us</li>
               <li>Privacy Policy</li>
               <li>Refunds & Returns</li>
@@ -75,14 +67,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Shipping & Button */}
-          <div className="flex justify-center md:justify-start items-start">
+          {/* Shipping Image */}
+          <div className="flex justify-center lg:justify-start items-start">
             <Image
               src={worldDisImg}
               alt="Worldwide Shipping"
-              width={120}
-              height={150}
-              className="h-auto w-auto"
+              width={160}
+              height={130}
+              // className="h-auto w-auto"
             />
           </div>
         </div>
@@ -91,7 +83,13 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="bg-[#e91325] py-4 text-sm">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
-          <div>Copyright © HDOGLOBALTRADE · 2020</div>
+          <div>
+            Copyright ©{" "}
+            <span className="underline decoration-1 underline-offset-2">
+              HDOGLOBALTRADE.
+            </span>{" "}
+            2020
+          </div>
           <div className="">
             <span className="text-start sm:text-center">We accept</span>
             <div className="flex  items-center py-4 space-x-2">
