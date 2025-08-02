@@ -16,11 +16,16 @@ export default function AddCard({
   const handleClick = async () => {
     let trackingId = localStorage.getItem("trackingId");
 
+    const a = uuidv4();
+    console.log("uuuid..", userId);
+
     if (!trackingId && !userId) {
       // generate a guest tracking ID
       trackingId = uuidv4();
       localStorage.setItem("trackingId", trackingId);
     }
+
+    console.log("trackingId...", trackingId);
 
     if (userId || trackingId) {
       if (quantity > 0) {

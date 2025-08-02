@@ -13,8 +13,6 @@ export default function FilterCWrapper() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [subcategories, setSubcategories] = useState([]);
 
-  console.log("selectedCategory...", selectedCategory);
-  console.log("subcategories...", subcategories);
 
   useEffect(() => {
     const fetchData = async () => {

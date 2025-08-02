@@ -176,6 +176,31 @@ export async function getUserById(id) {
 
 
 // products start---------------------------------------------------------------
+/**
+ * Fetches cart by userId (if logged in) or by trackingId (for guest users)
+ * @param userId MongoDB ObjectId or null
+ * @param trackingId string (must be provided for guests)
+ * @returns cart document or null
+ */
+export async function getCart({ userId, trackingId }) {
+  try {
+    let cart = null;
+
+    if (userId && mongoose.Types.ObjectId.isValid(userId)) {
+      cart = await cartModel.findOne({ userId, isOrdered: false }).lean();
+    }
+
+    if (!cart && trackingId) {
+      cart = await cartModel.findOne({ trackingId, isOrdered: false }).lean(); // ✅ added .lean()
+    }
+
+    return cart;
+  } catch (error) {
+    console.error("Error fetching cart:", error);
+    throw new Error("Failed to fetch cart");
+  }
+}
+
 
 export async function searchProducts(query) {
   await dbConnect();

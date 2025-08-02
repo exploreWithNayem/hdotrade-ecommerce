@@ -53,7 +53,7 @@ export default function ProductCard({ product, langCode, lan, relatedProduct=fal
           quantity={product?.quantity}
           lan={lan?.shop?.addCard}
           productId={product?.id}
-          userId={"1"}
+          // userId={"1"}
         />
       </div>
     </div>

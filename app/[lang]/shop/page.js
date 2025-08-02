@@ -25,7 +25,9 @@ export default async function page(props) {
   const decodedSize = decordedFilterCat(size);
 
   const lan = await getLang(lang);
-  
+
+
+
   return (
     <div className="w-full max-w-[1440px] mx-auto bg-[#ffffff] ">
       <div className="container pt-4 pb-16 items-start">

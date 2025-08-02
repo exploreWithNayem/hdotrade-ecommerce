@@ -6,7 +6,6 @@ import banner4 from "@/public/client/brand4.png";
 
 export default function OurBrand({ title = " Some of Our brand", color = "#1A1D21" }) {
 
-  console.log('color...', color)
   return (
     <div className="max-w-[1280px] mx-auto my-[70px] px-4">
       <h1
