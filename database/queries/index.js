@@ -75,7 +75,6 @@ export async function getCategories() {
   }
 }
 
-
 export async function addCategory({ name, slug, icon, description }) {
   try {
     const newCategory = await categoryModel.create({
@@ -102,8 +101,6 @@ export async function deleteCategory(id) {
   }
 }
 
-
-
 export async function createSubcategory({ name, slug, categoryId }) {
   try {
     const newSubcategory = await subcategoryModel.create({
@@ -120,20 +117,24 @@ export async function createSubcategory({ name, slug, categoryId }) {
 export async function getSubcategoriesByCategory(categoryId) {
   try {
     const subcategories = await subcategoryModel
-      .find({ categoryId })
+      .find({ categoryId: new mongoose.Types.ObjectId(categoryId) })
       .sort({ createdAt: -1 });
+
     return subcategories.map((item) => ({
       id: item._id.toString(),
       name: item.name,
       slug: item.slug,
     }));
   } catch (error) {
+    console.error("Error fetching subcategories:", error);
     throw new Error("Failed to fetch subcategories");
   }
 }
 
-
 // category end---------------------------------------------------------------
+
+
+// user start---------------------------------------------------------------
 
 export async function getUserByMail(email) {
   await dbConnect();
@@ -171,16 +172,10 @@ export async function getUserById(id) {
     console.log(err);
   }
 }
+// user end---------------------------------------------------------------
 
-export async function getAllCategory() {
-  await dbConnect();
-  try {
-    const categories = await productModel.distinct("category");
-    return categories;
-  } catch (e) {
-    console.error(e.message);
-  }
-}
+
+// products start---------------------------------------------------------------
 
 export async function searchProducts(query) {
   await dbConnect();
@@ -276,34 +271,7 @@ export async function getTrendingProduct() {
   return replaceMongoIdInArray(trendingProduct);
 }
 
-export async function AddToWishlist(userId, productId) {
-  await dbConnect();
 
-  try {
-    const user = await userModel.findById(userId);
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    // Ensure the wishlist field exists and is an array
-    if (!user.wishlist) {
-      user.wishlist = [];
-    }
-
-    const alreadyInList = user.wishlist.includes(productId);
-    if (!alreadyInList) {
-      user.wishlist.push(new mongoose.Types.ObjectId(productId));
-      await user.save();
-      return true;
-    }
-
-    return false;
-  } catch (err) {
-    console.error(err);
-    throw err; // Rethrow the error for further handling if necessary
-  }
-}
 
 export const cartCleanUp = async () => {
   const expirationTime = new Date(Date.now() - 20 * 60 * 1000);
@@ -562,17 +530,6 @@ export async function removeWishList(userId, productId) {
   await user.save();
 }
 
-export async function getWishListData(id) {
-  await dbConnect();
-  try {
-    const user = await userModel.findById(id);
-    const wishlist = user.wishlist;
-    const products = await productModel.find({ _id: { $in: wishlist } }).lean();
-    return replaceMongoIdInArray(products);
-  } catch (err) {
-    console.error(err);
-  }
-}
 
 export const getSummary = async () => {
   await dbConnect();
@@ -694,7 +651,7 @@ export const placeOrder = async (form) => {
     await orderModel.create(completeOrder);
 
     try {
-      await sendingEmail(newOrder, trackingCode); // Pass trackingCode for email content
+      // await sendingEmail(newOrder, trackingCode); // Pass trackingCode for email content
     } catch (e) {
       console.error("Email sending error:", e);
     }
@@ -706,147 +663,6 @@ export const placeOrder = async (form) => {
   }
 };
 
-// export const placeOrder = async (form) => {
-//   try {
-//     // Connect to the database
-//     await dbConnect();
-
-//     // Get the summary which includes cart info and user details
-//     const summary = await getSummary();
-
-//     // Create the new order object
-//     const newOrder = {
-//       cartInfo: summary.cartInfo,
-//       totalPrice: summary.estimate,
-//       userId: summary.userId,
-//       name: `${form?.firstName || ""} ${form?.lastName || ""}`.trim(),
-//       company: form?.company || "",
-//       region: form?.region || "",
-//       address: form?.address || "",
-//       city: form?.city || "",
-//       phone: form?.phone || "",
-//       email: form?.email || "",
-//     };
-
-//     const random = generateRandomID();
-
-//     try {
-//       //pdf.........................................................
-//       const pdfDoc = await PDFDocument.create();
-//       const page = pdfDoc.addPage([600, 400]);
-//       const { height } = page.getSize();
-//       const fontSize = 30;
-
-//       page.drawText(`Order Confirmation`, {
-//         x: 50,
-//         y: height - 4 * fontSize,
-//         size: fontSize,
-//         color: rgb(0, 0.53, 0.71),
-//       });
-
-//       page.drawText(`Order ID: kh923e48923`, {
-//         x: 50,
-//         y: height - 6 * fontSize,
-//         size: fontSize,
-//         color: rgb(0, 0, 0),
-//       });
-
-//       page.drawText(`Customer Name: ${newOrder?.name}`, {
-//         x: 50,
-//         y: height - 8 * fontSize,
-//         size: fontSize,
-//         color: rgb(0, 0, 0),
-//       });
-
-//       page.drawText(`Address: ${newOrder?.address}`, {
-//         x: 50,
-//         y: height - 10 * fontSize,
-//         size: fontSize,
-//         color: rgb(0, 0, 0),
-//       });
-
-//       page.drawText(`Total Amount: $${newOrder?.totalPrice}`, {
-//         x: 50,
-//         y: height - 12 * fontSize,
-//         size: fontSize,
-//         color: rgb(0, 0, 0),
-//       });
-
-//       const pdfBytes = await pdfDoc.save();
-
-//       let folderPath = null;
-//       if (process.env.DEV && process.env.DEV === "Yes") {
-//         folderPath = path.join(__dirname, `yourPath`);
-//       } else {
-//         folderPath = "/tmp/";
-//       }
-
-//       // Define a path to save the PDF
-//       const pdfPath = path.join(process.cwd(), folderPath, `${random}.pdf`);
-
-//       // Ensure the directory exists
-//       fs.mkdirSync(path.dirname(pdfPath), { recursive: true });
-
-//       // Save the PDF to the file system
-//       fs.writeFileSync(pdfPath, pdfBytes);
-//       //pdf.........................................................
-//     } catch (e) {
-//       console.log(e);
-//     }
-
-//     const completeOrder = { ...newOrder, pdfFile: random };
-
-//     await orderModel.create(completeOrder);
-
-//     try {
-//       await sendingEmail(newOrder, random);
-//     } catch (e) {
-//       console.log(e);
-//     }
-
-//     return true;
-//   } catch (error) {
-//     return false;
-//   }
-// };
-
-let folderPath = null;
-if (process.env.DEV && process.env.DEV === "Yes") {
-  folderPath = path.join(__dirname, `yourPath`);
-} else {
-  folderPath = "/tmp/";
-}
-
-// export async function sendingEmail(newOrder, random) {
-//   let attachments;
-//   try {
-//     const pdfPath = path.join(process.cwd(), folderPath, `${random}.pdf`);
-
-//     const pdfBuffer = fs.readFileSync(pdfPath);
-//     const pdfBase64 = pdfBuffer.toString("base64");
-//     attachments = [
-//       {
-//         filename: "order-confirmation.pdf",
-//         content: pdfBase64,
-//         contentType: "application/pdf",
-//         disposition: "attachment",
-//       },
-//     ];
-//   } catch (e) {
-//     console.error(e.message);
-//   }
-
-//   const resend = new Resend(process.env.MAIL_SEND_KEY);
-//   const message = `Dear ${newOrder?.name}, you have successfully ordered. Total amount to pay is $${newOrder?.totalPrice}`;
-
-//   await resend.emails.send({
-//     from: "onboarding@resend.dev",
-//     to: "naeemislam13790@gmail.com",
-//     subject: "You have successfully ordered",
-//     react: EmailTemplate({ message }),
-//     attachments: attachments || [],
-//   });
-// }
 
 export const clearCardlist = async (userId) => {
   await dbConnect();
@@ -856,3 +672,5 @@ export const clearCardlist = async (userId) => {
     console.error("Error clearing cardlist:", error);
   }
 };
+
+// products end---------------------------------------------------------------
