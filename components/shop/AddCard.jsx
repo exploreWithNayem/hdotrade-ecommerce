@@ -1,31 +1,53 @@
 "use client";
 
-import { AddToCard, removeWishList } from "@/database/queries";
+import { addToCart, removeWishList } from "@/database/queries";
 import { serverRevalidate } from "@/utils/serverRev";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AddCard({
   lan,
   productId,
-  userId,
+  userId, // could be null for guests
   quantity,
   detail,
   fromWish,
 }) {
   const handleClick = async () => {
-    if (userId) {
+    let trackingId = localStorage.getItem("trackingId");
+
+    if (!trackingId && !userId) {
+      // generate a guest tracking ID
+      trackingId = uuidv4();
+      localStorage.setItem("trackingId", trackingId);
+    }
+
+    if (userId || trackingId) {
       if (quantity > 0) {
-        const mess = await AddToCard(userId, productId);
-        if (mess) {
-          toast.success("Added to the card", {
-            position: "bottom-right",
+        try {
+          const mess = await addToCart({
+            userId: userId || null,
+            trackingId: trackingId || null,
+            productId,
           });
-          if (fromWish) {
-            await removeWishList(userId, productId);
+
+          if (mess?.success) {
+            toast.success("Added to cart", {
+              position: "bottom-right",
+            });
+
+            if (fromWish && userId) {
+              await removeWishList(userId, productId);
+            }
+
+            await serverRevalidate();
+          } else {
+            toast.info(mess?.message || "Already added", {
+              position: "bottom-right",
+            });
           }
-          await serverRevalidate();
-        } else {
-          toast.info(" Already added", {
+        } catch (err) {
+          toast.error("Something went wrong.", {
             position: "bottom-right",
           });
         }
@@ -43,21 +65,77 @@ export default function AddCard({
 
   return (
     <>
-      {detail ? (
-        <button
-          onClick={handleClick}
-          className="font-bold text-[16px] text-white bg-red-600 rounded-full py-3 cursor-pointer transition-all duration-300 hover:bg-red-700 hover:shadow-md"
-        >
-          <i className="fa-solid fa-bag-shopping mr-2"></i> {lan}
-        </button>
-      ) : (
-        <button
-          onClick={handleClick}
-          className="font-bold text-[16px] text-white bg-red-600 rounded-full py-3 cursor-pointer transition-all duration-300 hover:bg-red-700 hover:shadow-md"
-        >
-          Add To Cart
-        </button>
-      )}
+      <button
+        onClick={handleClick}
+        className="font-bold text-[16px] text-white bg-red-600 rounded-full py-3 cursor-pointer transition-all duration-300 hover:bg-red-700 hover:shadow-md"
+      >
+        <i className="fa-solid fa-bag-shopping mr-2"></i>{" "}
+        {detail ? lan : "Add To Cart"}
+      </button>
     </>
   );
 }
+
+// "use client";
+
+// import { addToCart, removeWishList } from "@/database/queries";
+// import { serverRevalidate } from "@/utils/serverRev";
+// import { toast } from "react-toastify";
+
+// export default function AddCard({
+//   lan,
+//   productId,
+//   userId,
+//   quantity,
+//   detail,
+//   fromWish,
+// }) {
+//   const handleClick = async () => {
+//     if (userId) {
+//       if (quantity > 0) {
+//         const mess = await addToCart(userId, productId);
+//         if (mess) {
+//           toast.success("Added to the card", {
+//             position: "bottom-right",
+//           });
+//           if (fromWish) {
+//             await removeWishList(userId, productId);
+//           }
+//           await serverRevalidate();
+//         } else {
+//           toast.info(" Already added", {
+//             position: "bottom-right",
+//           });
+//         }
+//       } else {
+//         toast.error("Sorry! this product is out of stock", {
+//           position: "bottom-right",
+//         });
+//       }
+//     } else {
+//       toast.error("Login please", {
+//         position: "bottom-right",
+//       });
+//     }
+//   };
+
+//   return (
+//     <>
+//       {detail ? (
+//         <button
+//           onClick={handleClick}
+//           className="font-bold text-[16px] text-white bg-red-600 rounded-full py-3 cursor-pointer transition-all duration-300 hover:bg-red-700 hover:shadow-md"
+//         >
+//           <i className="fa-solid fa-bag-shopping mr-2"></i> {lan}
+//         </button>
+//       ) : (
+//         <button
+//           onClick={handleClick}
+//           className="font-bold text-[16px] text-white bg-red-600 rounded-full py-3 cursor-pointer transition-all duration-300 hover:bg-red-700 hover:shadow-md"
+//         >
+//           Add To Cart
+//         </button>
+//       )}
+//     </>
+//   );
+// }

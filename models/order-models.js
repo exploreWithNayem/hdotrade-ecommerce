@@ -1,61 +1,55 @@
-import { ObjectId } from "mongodb";
 import mongoose, { Schema } from "mongoose";
 
+const orderSchema = new Schema(
+  {
+    trackingCode: {
+      type: String,
+      required: true,
+      unique: true,
+    },
 
-const orderSchema = new Schema({
-  
-  cartInfo: {
-    required: false,
-    type: Array,
-  },
-  totalPrice: {
-    required: true,
-    type: Number,
-  },
+    products: [
+      {
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: "products" },
+        name: String,
+        image: String,
+        price: Number,
+        quantity: Number,
+      },
+    ],
 
-  userId: {
-    required: true,
-    type: ObjectId,
-  },
-  name: {
-    required: true,
-    type: String,
-  },
+    totalAmount: Number,
+    finalAmount: Number,
 
-  company: {
-    required: false,
-    type: String,
+    shippingAddress: {
+      fullName: String,
+      phone: String,
+      addressLine1: String,
+      addressLine2: String,
+      city: String,
+      zip: String,
+      country: String,
+    },
+
+    orderStatus: {
+      type: String,
+      enum: ["processing", "shipped", "delivered", "cancelled"],
+      default: "processing",
+    },
+
+    paymentMethod: {
+      type: String,
+      enum: ["cod", "card", "stripe", "sslcommerz", "manual"],
+      default: "cod",
+    },
+
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  region: {
-    required: false,
-    type: String,
-  },
-  address: {
-    required: true,
-    type: String,
-  },
-  city: {
-    required: true,
-    type: String,
-  },
-  phone: {
-    required: true,
-    type: String,
-  },
-  email: {
-    required: false,
-    type: String,
-  },
-  pdfFile: {
-    required: false,
-    type: String,
-  },
-  orderedAt: {
-    required: false,
-    type: Date,
-    default: Date.now
-  },
-});
+  { timestamps: true }
+);
 
 export const orderModel =
   mongoose.models.orders ?? mongoose.model("orders", orderSchema);

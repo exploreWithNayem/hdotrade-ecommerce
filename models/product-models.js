@@ -1,64 +1,78 @@
-import mongoose, {Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const productSchema = new Schema({
   name: {
     required: true,
-    type: String
+    type: String,
   },
   image: {
     required: false,
-    type: Array
+    type: [String], // More specific than just Array
   },
   price: {
     required: true,
-    type: Number
+    type: Number,
   },
   discount_price: {
     required: false,
-    type: Number
+    type: Number,
   },
   reviewsNumber: {
     required: false,
-    type: Number
+    type: Number,
   },
   ratings: {
     required: false,
-    type: Number
+    type: Number,
   },
-  brand: {
+
+  // Replacing "brand" with manufacturerId (linked to manufacturers collection)
+  manufacturerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "manufacturers",
     required: false,
-    type: String
   },
-  category: {
+
+  // Replacing "category" with categoryId (linked to categories collection)
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "categories",
     required: false,
-    type: String
   },
+
   description: {
     required: true,
-    type: String
+    type: String,
   },
   sizes: {
     required: false,
-    type: Array
+    type: [String],
+  },
+  colors: {
+    required: false,
+    type: [String],
   },
   soldCounts: {
     required: false,
-    type: Number
+    type: Number,
+    default: 0,
   },
-
-  pubshied: {
+  published: {
     required: false,
-    type: String
+    type: Date,
+    default: Date.now,
   },
   quantity: {
     required: true,
-    type: Number
+    type: Number,
   },
-  
 
-
+  details: {
+    material: { type: String },
+    dimensions: { type: String },
+    weight: { type: String },
+  },
 });
 
-
-
-export const productModel = mongoose.models.products ?? mongoose.model("products", productSchema);
+export const productModel =
+  mongoose.models.products ?? mongoose.model("products", productSchema);

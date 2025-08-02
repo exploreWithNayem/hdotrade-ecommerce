@@ -9,19 +9,137 @@ import {
   replaceMongoIdInObject,
 } from "@/utils/data-util";
 import { productModel } from "@/models/product-models";
+import { cartModel } from "@/models/cart-models";
 import { auth } from "@/auth";
 import { orderModel } from "@/models/order-models";
-import { Resend } from "resend";
-import EmailTemplate from "@/components/common/EmailTemplate";
-import { generateRandomID } from "@/utils/randomIdGenarate";
+import { dbConnect } from "@/service/mongo";
+import { manufacturerModel } from "@/models/manufacture-model";
+import { categoryModel } from "@/models/category-models";
+import { subcategoryModel } from "@/models/sub-cat-models";
+
 const { userModel } = require("@/models/users-model");
-const { dbConnect } = require("@/service/mongo");
+
+// manufacturer start ---------------------------------------------------------------
+
+export async function getManufacturers() {
+  await dbConnect();
+
+  const manufacturers = await manufacturerModel.find().lean();
+  return replaceMongoIdInArray(manufacturers);
+}
+export async function createManufacturer(data) {
+  await dbConnect();
+
+  // Check if manufacturer with same name already exists
+  const existing = await manufacturerModel.findOne({ name: data.name });
+  if (existing) {
+    throw new Error("Manufacturer with this name already exists.");
+  }
+
+  const newManufacturer = new manufacturerModel({
+    name: data.name,
+    logo: data.logo || "",
+    description: data.description || "",
+    website: data.website || "",
+  });
+
+  const saved = await newManufacturer.save();
+  return saved.toObject(); // or `lean()` if needed
+}
+
+export async function deleteManufacturer(id) {
+  await dbConnect();
+
+  const deleted = await manufacturerModel.findByIdAndDelete(id);
+
+  if (!deleted) {
+    throw new Error("Manufacturer not found or already deleted.");
+  }
+
+  return deleted.toObject();
+}
+// manufacturer end ---------------------------------------------------------------
+
+// category start ---------------------------------------------------------------
+export async function getCategories() {
+  try {
+    const categories = await categoryModel
+      .find()
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+    return replaceMongoIdInArray(categories);
+  } catch (error) {
+    console.error("Failed to get categories:", error);
+    throw new Error("Error fetching categories");
+  }
+}
+
+
+export async function addCategory({ name, slug, icon, description }) {
+  try {
+    const newCategory = await categoryModel.create({
+      name,
+      slug,
+      icon,
+      description,
+    });
+
+    return newCategory;
+  } catch (error) {
+    console.error("Failed to add category:", error);
+    throw new Error("Error adding category");
+  }
+}
+
+export async function deleteCategory(id) {
+  try {
+    const deletedCategory = await categoryModel.findByIdAndDelete(id);
+    return deletedCategory;
+  } catch (error) {
+    console.error("Failed to delete category:", error);
+    throw new Error("Error deleting category");
+  }
+}
+
+
+
+export async function createSubcategory({ name, slug, categoryId }) {
+  try {
+    const newSubcategory = await subcategoryModel.create({
+      name,
+      slug,
+      categoryId,
+    });
+    return newSubcategory;
+  } catch (error) {
+    throw new Error("Failed to create subcategory: " + error.message);
+  }
+}
+
+export async function getSubcategoriesByCategory(categoryId) {
+  try {
+    const subcategories = await subcategoryModel
+      .find({ categoryId })
+      .sort({ createdAt: -1 });
+    return subcategories.map((item) => ({
+      id: item._id.toString(),
+      name: item.name,
+      slug: item.slug,
+    }));
+  } catch (error) {
+    throw new Error("Failed to fetch subcategories");
+  }
+}
+
+
+// category end---------------------------------------------------------------
 
 export async function getUserByMail(email) {
   await dbConnect();
   try {
     const user = await userModel.findOne({ email: email });
-    
+
     if (!user) {
       // Handle case when no user is found
       return null;
@@ -43,7 +161,6 @@ export async function getUserByMail(email) {
     return null; // Return null or handle the error appropriately
   }
 }
-
 
 export async function getUserById(id) {
   await dbConnect();
@@ -223,64 +340,104 @@ export const cartCleanUp = async () => {
   }
 };
 
-export async function AddToCard(userId, productId) {
+export async function addToCart({
+  userId = null,
+  trackingId = null,
+  productId,
+  quantity = 1,
+  size,
+  color,
+}) {
   await dbConnect();
 
-  try {
-    // Ensure the product ID is a valid ObjectId
-    if (!mongoose.Types.ObjectId.isValid(productId)) {
-      throw new Error("Invalid product ID");
-    }
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
+    throw new Error("Invalid product ID");
+  }
 
-    const productObjectId = new mongoose.Types.ObjectId(productId);
+  const productObjectId = new mongoose.Types.ObjectId(productId);
+  const product = await productModel.findById(productObjectId);
 
-    // Find the user by ID
+  if (!product) throw new Error("Product not found");
+  if (product.quantity < quantity) throw new Error("Insufficient stock");
+
+  // If user is logged in
+  if (userId) {
     const user = await userModel.findById(userId);
-    if (!user) {
-      throw new Error("User not found");
-    }
+    if (!user) throw new Error("User not found");
 
-    // Ensure the cardlist field exists and is an array
-    if (!user.cardlist) {
-      user.cardlist = [];
-    }
+    if (!user.cardlist) user.cardlist = [];
 
-    // Check if the product is already in the user's card list
-    const alreadyInList = user.cardlist.some((item) =>
-      new mongoose.Types.ObjectId(item.itemId).equals(productObjectId)
+    const alreadyInList = user.cardlist.find(
+      (item) =>
+        item.itemId.equals(productObjectId) &&
+        item.size === size &&
+        item.color === color
     );
 
     if (alreadyInList) {
-      return false;
+      alreadyInList.itemQuantity += quantity;
+    } else {
+      user.cardlist.push({
+        itemId: productObjectId,
+        itemQuantity: quantity,
+        size,
+        color,
+        addedAt: new Date(),
+      });
     }
 
-    // Check the product availability and decrease the quantity by 1
-    const product = await productModel.findById(productObjectId);
-    if (!product) {
-      throw new Error("Product not found");
-    }
-    if (product.quantity <= 0) {
-      throw new Error("Product out of stock");
+    product.quantity -= quantity;
+    await product.save();
+    await user.save();
+    return { success: true, type: "user" };
+  }
+
+  // If guest user with trackingId
+  if (trackingId) {
+    let cart = await cartModel.findOne({ trackingId });
+
+    if (!cart) {
+      cart = await cartModel.create({
+        trackingId,
+        items: [
+          {
+            productId,
+            quantity,
+            size,
+            color,
+            addedAt: new Date(),
+          },
+        ],
+      });
+    } else {
+      const itemIndex = cart.items.findIndex(
+        (item) =>
+          item.productId.equals(productObjectId) &&
+          item.size === size &&
+          item.color === color
+      );
+
+      if (itemIndex > -1) {
+        cart.items[itemIndex].quantity += quantity;
+      } else {
+        cart.items.push({
+          productId,
+          quantity,
+          size,
+          color,
+          addedAt: new Date(),
+        });
+      }
+      await cart.save();
     }
 
-    // Decrease the product quantity by 1
-    product.quantity -= 1;
+    product.quantity -= quantity;
     await product.save();
 
-    // Add the product to the card list with itemQuantity 1 and addedAt
-    user.cardlist.push({
-      itemId: productObjectId,
-      itemQuantity: 1,
-      addedAt: new Date(),
-    });
-
-    await user.save();
-
-    return true;
-  } catch (err) {
-    console.error(err);
-    throw err; // Re-throw the error after logging it
+    return { success: true, type: "guest" };
   }
+
+  throw new Error("No userId or trackingId provided");
 }
 
 export async function getCardListData(id) {
@@ -441,15 +598,19 @@ export const getSummary = async () => {
   }
 };
 
+function generateTrackingCode() {
+  return "ORD-" + Date.now() + "-" + Math.floor(Math.random() * 10000);
+}
+
 export const placeOrder = async (form) => {
   try {
-    // Connect to the database
     await dbConnect();
 
-    // Get the summary which includes cart info and user details
     const summary = await getSummary();
 
-    // Create the new order object
+    const trackingCode = generateTrackingCode();
+
+    // Create the new order object with trackingCode
     const newOrder = {
       cartInfo: summary.cartInfo,
       totalPrice: summary.estimate,
@@ -461,12 +622,11 @@ export const placeOrder = async (form) => {
       city: form?.city || "",
       phone: form?.phone || "",
       email: form?.email || "",
+      trackingCode, // << Added tracking code here
     };
 
-    const random = generateRandomID();
-
     try {
-      //pdf.........................................................
+      // PDF generation
       const pdfDoc = await PDFDocument.create();
       const page = pdfDoc.addPage([600, 400]);
       const { height } = page.getSize();
@@ -479,7 +639,8 @@ export const placeOrder = async (form) => {
         color: rgb(0, 0.53, 0.71),
       });
 
-      page.drawText(`Order ID: kh923e48923`, {
+      page.drawText(`Tracking Number: ${trackingCode}`, {
+        // Updated line
         x: 50,
         y: height - 6 * fontSize,
         size: fontSize,
@@ -516,34 +677,138 @@ export const placeOrder = async (form) => {
         folderPath = "/tmp/";
       }
 
-      // Define a path to save the PDF
-      const pdfPath = path.join(process.cwd(), folderPath, `${random}.pdf`);
+      const pdfPath = path.join(
+        process.cwd(),
+        folderPath,
+        `${trackingCode}.pdf`
+      );
 
-      // Ensure the directory exists
       fs.mkdirSync(path.dirname(pdfPath), { recursive: true });
-
-      // Save the PDF to the file system
       fs.writeFileSync(pdfPath, pdfBytes);
-      //pdf.........................................................
     } catch (e) {
-      console.log(e);
+      console.error("PDF generation error:", e);
     }
 
-    const completeOrder = { ...newOrder, pdfFile: random };
+    const completeOrder = { ...newOrder, pdfFile: trackingCode };
 
     await orderModel.create(completeOrder);
 
     try {
-      await sendingEmail(newOrder, random);
+      await sendingEmail(newOrder, trackingCode); // Pass trackingCode for email content
     } catch (e) {
-      console.log(e);
+      console.error("Email sending error:", e);
     }
 
-    return true;
+    return { success: true, trackingCode };
   } catch (error) {
-    return false;
+    console.error("Order placement error:", error);
+    return { success: false };
   }
 };
+
+// export const placeOrder = async (form) => {
+//   try {
+//     // Connect to the database
+//     await dbConnect();
+
+//     // Get the summary which includes cart info and user details
+//     const summary = await getSummary();
+
+//     // Create the new order object
+//     const newOrder = {
+//       cartInfo: summary.cartInfo,
+//       totalPrice: summary.estimate,
+//       userId: summary.userId,
+//       name: `${form?.firstName || ""} ${form?.lastName || ""}`.trim(),
+//       company: form?.company || "",
+//       region: form?.region || "",
+//       address: form?.address || "",
+//       city: form?.city || "",
+//       phone: form?.phone || "",
+//       email: form?.email || "",
+//     };
+
+//     const random = generateRandomID();
+
+//     try {
+//       //pdf.........................................................
+//       const pdfDoc = await PDFDocument.create();
+//       const page = pdfDoc.addPage([600, 400]);
+//       const { height } = page.getSize();
+//       const fontSize = 30;
+
+//       page.drawText(`Order Confirmation`, {
+//         x: 50,
+//         y: height - 4 * fontSize,
+//         size: fontSize,
+//         color: rgb(0, 0.53, 0.71),
+//       });
+
+//       page.drawText(`Order ID: kh923e48923`, {
+//         x: 50,
+//         y: height - 6 * fontSize,
+//         size: fontSize,
+//         color: rgb(0, 0, 0),
+//       });
+
+//       page.drawText(`Customer Name: ${newOrder?.name}`, {
+//         x: 50,
+//         y: height - 8 * fontSize,
+//         size: fontSize,
+//         color: rgb(0, 0, 0),
+//       });
+
+//       page.drawText(`Address: ${newOrder?.address}`, {
+//         x: 50,
+//         y: height - 10 * fontSize,
+//         size: fontSize,
+//         color: rgb(0, 0, 0),
+//       });
+
+//       page.drawText(`Total Amount: $${newOrder?.totalPrice}`, {
+//         x: 50,
+//         y: height - 12 * fontSize,
+//         size: fontSize,
+//         color: rgb(0, 0, 0),
+//       });
+
+//       const pdfBytes = await pdfDoc.save();
+
+//       let folderPath = null;
+//       if (process.env.DEV && process.env.DEV === "Yes") {
+//         folderPath = path.join(__dirname, `yourPath`);
+//       } else {
+//         folderPath = "/tmp/";
+//       }
+
+//       // Define a path to save the PDF
+//       const pdfPath = path.join(process.cwd(), folderPath, `${random}.pdf`);
+
+//       // Ensure the directory exists
+//       fs.mkdirSync(path.dirname(pdfPath), { recursive: true });
+
+//       // Save the PDF to the file system
+//       fs.writeFileSync(pdfPath, pdfBytes);
+//       //pdf.........................................................
+//     } catch (e) {
+//       console.log(e);
+//     }
+
+//     const completeOrder = { ...newOrder, pdfFile: random };
+
+//     await orderModel.create(completeOrder);
+
+//     try {
+//       await sendingEmail(newOrder, random);
+//     } catch (e) {
+//       console.log(e);
+//     }
+
+//     return true;
+//   } catch (error) {
+//     return false;
+//   }
+// };
 
 let folderPath = null;
 if (process.env.DEV && process.env.DEV === "Yes") {
@@ -552,36 +817,36 @@ if (process.env.DEV && process.env.DEV === "Yes") {
   folderPath = "/tmp/";
 }
 
-export async function sendingEmail(newOrder, random) {
-  let attachments;
-  try {
-    const pdfPath = path.join(process.cwd(), folderPath, `${random}.pdf`);
+// export async function sendingEmail(newOrder, random) {
+//   let attachments;
+//   try {
+//     const pdfPath = path.join(process.cwd(), folderPath, `${random}.pdf`);
 
-    const pdfBuffer = fs.readFileSync(pdfPath);
-    const pdfBase64 = pdfBuffer.toString("base64");
-    attachments = [
-      {
-        filename: "order-confirmation.pdf",
-        content: pdfBase64,
-        contentType: "application/pdf",
-        disposition: "attachment",
-      },
-    ];
-  } catch (e) {
-    console.error(e.message);
-  }
+//     const pdfBuffer = fs.readFileSync(pdfPath);
+//     const pdfBase64 = pdfBuffer.toString("base64");
+//     attachments = [
+//       {
+//         filename: "order-confirmation.pdf",
+//         content: pdfBase64,
+//         contentType: "application/pdf",
+//         disposition: "attachment",
+//       },
+//     ];
+//   } catch (e) {
+//     console.error(e.message);
+//   }
 
-  const resend = new Resend(process.env.MAIL_SEND_KEY);
-  const message = `Dear ${newOrder?.name}, you have successfully ordered. Total amount to pay is $${newOrder?.totalPrice}`;
+//   const resend = new Resend(process.env.MAIL_SEND_KEY);
+//   const message = `Dear ${newOrder?.name}, you have successfully ordered. Total amount to pay is $${newOrder?.totalPrice}`;
 
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: "naeemislam13790@gmail.com",
-    subject: "You have successfully ordered",
-    react: EmailTemplate({ message }),
-    attachments: attachments || [],
-  });
-}
+//   await resend.emails.send({
+//     from: "onboarding@resend.dev",
+//     to: "naeemislam13790@gmail.com",
+//     subject: "You have successfully ordered",
+//     react: EmailTemplate({ message }),
+//     attachments: attachments || [],
+//   });
+// }
 
 export const clearCardlist = async (userId) => {
   await dbConnect();
