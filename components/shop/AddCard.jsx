@@ -16,8 +16,6 @@ export default function AddCard({
   const handleClick = async () => {
     let trackingId = localStorage.getItem("trackingId");
 
-    const a = uuidv4();
-    console.log("uuuid..", userId);
 
     if (!trackingId && !userId) {
       // generate a guest tracking ID
