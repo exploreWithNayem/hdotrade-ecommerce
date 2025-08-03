@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState, useCallback } from "react";
-import RemoveCard from "./RemoveCard";
+// import RemoveCard from "./RemoveCard";
 import { getProductById, incrementItemQuantity } from "@/database/queries";
 import { serverRevalidate } from "@/utils/serverRev";
 import { toast } from "react-toastify";
@@ -12,6 +12,7 @@ export default function List({ product, langCode, user }) {
   const [totalPrice, setTotalPrice] = useState(product?.discount_price);
 
   const [isUpdating, setIsUpdating] = useState(false);
+ const trackingId = localStorage.getItem("trackingId");
 
   function debounce(func, wait) {
     let timeout;
@@ -36,7 +37,7 @@ export default function List({ product, langCode, user }) {
           );
 
           const plus = true;
-          await incrementItemQuantity(user?.id, product?.id, plus);
+          await incrementItemQuantity(trackingId,user?.id, product?.id, plus);
 
           await serverRevalidate();
         } else {
@@ -69,7 +70,7 @@ export default function List({ product, langCode, user }) {
           );
 
           const plus = false;
-          await incrementItemQuantity(user?.id, product?.id, plus);
+          await incrementItemQuantity(trackingId,user?.id, product?.id, plus);
 
           await serverRevalidate();
         } catch (error) {
@@ -144,7 +145,7 @@ export default function List({ product, langCode, user }) {
           </button>
         </div>
 
-        <RemoveCard productId={product?.id} user={user} />
+        {/* <RemoveCard productId={product?.id} user={user} /> */}
       </div>
     </>
   );

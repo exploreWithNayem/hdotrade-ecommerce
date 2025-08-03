@@ -1,8 +1,8 @@
-const NoCard = ({lan}) => {
+const NoCard = () => {
   return (
     <div className="p-4 rounded-md border mb-8 border-gray-600/30">
-      <h2 className="text-2xl font-bold text-primary">{lan?.noCart}</h2>
-      <p className="text-slate-600">{lan?.addCartlist}</p>
+      <h2 className="text-2xl font-bold text-primary">No Cart Added</h2>
+      <p className="text-slate-600">Please add your cart</p>
     </div>
   );
 };
