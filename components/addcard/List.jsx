@@ -6,6 +6,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { getProductById, incrementItemQuantity } from "@/database/queries";
 import { serverRevalidate } from "@/utils/serverRev";
 import { toast } from "react-toastify";
+import RemoveCard from "./RemoveCard";
 
 export default function List({ product, langCode, user }) {
   const [quantity, setQuantity] = useState(product?.cartQuantity);
@@ -102,7 +103,9 @@ export default function List({ product, langCode, user }) {
 
   return (
     <>
-      <div className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
+
+
+       <div className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
         <div className="w-28">
           <Image
             src={product?.image[0]}
@@ -145,8 +148,8 @@ export default function List({ product, langCode, user }) {
           </button>
         </div>
 
-        {/* <RemoveCard productId={product?.id} user={user} /> */}
-      </div>
+        <RemoveCard productId={product?.id} user={user} />
+      </div>  
     </>
   );
 }
