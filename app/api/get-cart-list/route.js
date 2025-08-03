@@ -11,8 +11,6 @@ export const GET = async (request) => {
   const userId = searchParams.get("userId");
   const trackingId = searchParams.get("trackingId");
 
-
-
   try {
     let cart = null;
 
