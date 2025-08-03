@@ -5,6 +5,7 @@ import { useCart } from "@/providers/CartContext";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import Cookies from "js-cookie";
+import { serverRevalidate } from "@/utils/serverRev";
 
 export default function AddCard({
   lan,
@@ -23,7 +24,7 @@ export default function AddCard({
     // Set trackingId for guests if not already present
     if (!trackingId && !userId) {
       trackingId = uuidv4();
-      
+
       Cookies.set("trackingId", trackingId, { expires: 30 }); // store for 30 days
     }
 
@@ -52,7 +53,7 @@ export default function AddCard({
         if (fromWish && userId) {
           await removeWishList(userId, productId);
         }
-
+        await serverRevalidate();
         await fetchCart();
       } else {
         toast.info(response?.message || "Already added", {

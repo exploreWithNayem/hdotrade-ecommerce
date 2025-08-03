@@ -3,6 +3,6 @@
 import  { revalidatePath } from "next/cache"
 
 export const serverRevalidate = async () => {
-    revalidatePath("/add-card");
+    revalidatePath("/");
 }
 

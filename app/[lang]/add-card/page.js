@@ -5,13 +5,14 @@ export default async function CartPage({ params }) {
   const cookieStore = await cookies();
   const trackingId = cookieStore.get("trackingId")?.value;
 
+  const { lang } = await params;
+
   let products = [];
 
   if (trackingId) {
     try {
       const query = new URLSearchParams({ trackingId }).toString();
 
-      console.log("query...", query);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_SITE_URL}/api/get-cart-list?${query}`,
         {
@@ -33,7 +34,7 @@ export default async function CartPage({ params }) {
   return (
     <div>
       <CardList
-        langCode={params.lang}
+        langCode={lang}
         products={products}
         trackingId={trackingId}
       />
