@@ -5,8 +5,9 @@ import NoCard from "./NoCard";
 const CardList = ({ langCode, products, trackingId }) => {
   // Calculate subtotal
   const subtotal = products
-    .reduce((total, p) => total + p.price * p.quantity, 0)
+    .reduce((total, p) => total + p.discount_price * p.cartQuantity, 0)
     .toFixed(2);
+
 
   return (
     <div className="flex justify-center items-center  py-10 px-4">
