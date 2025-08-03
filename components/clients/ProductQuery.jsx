@@ -6,14 +6,12 @@ export default async function ProductQuery({
   filCat,
   fillPrice,
   fillSize,
-  langCode,
-  lan,
 }) {
   const products = await getProducts(filCat, search, fillPrice, fillSize);
 
   return (
     <>
-      <ShopProducts products={products} langCode={langCode} lan={lan} />
+      <ShopProducts products={products}  />
     </>
   );
 }

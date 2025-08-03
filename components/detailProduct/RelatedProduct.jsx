@@ -1,7 +1,7 @@
 import { getProductByCategory } from "@/database/queries";
 import ProductCard from "../shop/ProductCard";
 
-const RelatedProduct = async ({ category, langCode }) => {
+const RelatedProduct = async ({ category }) => {
   const relatedProduct = await getProductByCategory(category);
   const newRelatedProduct = relatedProduct.slice(0, 4);
   return (
@@ -17,7 +17,7 @@ const RelatedProduct = async ({ category, langCode }) => {
               <ProductCard
                 key={product?.id}
                 product={product}
-                langCode={langCode}
+
                 relatedProduct={true}
               />
             ))}

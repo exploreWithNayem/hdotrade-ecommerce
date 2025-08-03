@@ -1,7 +1,7 @@
 import FilterC from "@/components/clients/FilterC";
 import ProductQuery from "@/components/clients/ProductQuery";
 import Loading from "@/components/common/Loading";
-import { getLang } from "@/languages/dynamicLangSwitch";
+
 import { Suspense } from "react";
 const decordedFilterCat = (filCat) => {
   const decorded = decodeURI(filCat);
@@ -16,17 +16,9 @@ export default async function page(props) {
 
   const { search, filterCat, priceFilter, size } = searchParams;
 
-  const params = await props.params;
-
-  const { lang } = params;
-
   const decodedCat = decordedFilterCat(filterCat);
   const decodedPrice = decordedFilterCat(priceFilter);
   const decodedSize = decordedFilterCat(size);
-
-  const lan = await getLang(lang);
-
-
 
   return (
     <div className="w-full max-w-[1440px] mx-auto bg-[#ffffff] ">
@@ -38,8 +30,6 @@ export default async function page(props) {
             filCat={decodedCat}
             fillPrice={decodedPrice}
             fillSize={decodedSize}
-            langCode={lang}
-            lan={lan?.shop}
           />
         </Suspense>
       </div>

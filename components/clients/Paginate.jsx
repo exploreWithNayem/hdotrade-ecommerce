@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const itemsPerPage = 9; // change to what fits your grid
 
-export default function ClientPaginatedProducts({ products, langCode }) {
+export default function ClientPaginatedProducts({ products }) {
   const [currentPage, setCurrentPage] = useState(0);
 
   const pageCount = Math.ceil(products.length / itemsPerPage);
@@ -24,7 +24,7 @@ export default function ClientPaginatedProducts({ products, langCode }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
         {currentItems.map((product) => (
           <ProductCard
-            langCode={langCode}
+
             key={product?.id}
             product={product}
           />

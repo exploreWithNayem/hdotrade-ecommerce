@@ -1,7 +1,6 @@
 import ProductPage from "@/components/clients/ProductCartC";
 import RelatedProduct from "@/components/detailProduct/RelatedProduct";
 import { getProductById } from "@/database/queries";
-import { getLang } from "@/languages/dynamicLangSwitch";
 
 export async function generateMetadata(props) {
   const params = await props.params;
@@ -30,7 +29,7 @@ export default async function page(props) {
   const { id, lang } = params;
 
   const product = await getProductById(id);
-  const lan = await getLang(lang);
+
 
   return (
     <>
@@ -39,7 +38,6 @@ export default async function page(props) {
         <ProductPage product={product} />
         <RelatedProduct
           category={product?.category}
-          lan={lan?.detail?.related}
           langCode={lang}
         />
       </div>

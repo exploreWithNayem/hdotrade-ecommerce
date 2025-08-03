@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { serverRevalidate } from "@/utils/serverRev";
 import { useRouter } from "next/navigation";
 
-export default function ControllCheckout({ summery, langCode }) {
+export default function ControllCheckout({ summery }) {
   const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -42,7 +42,7 @@ export default function ControllCheckout({ summery, langCode }) {
         await clearCardlist(summery?.userId);
         setFormData(null);
         await serverRevalidate();
-        router.push(`/${langCode}/account`);
+        router.push('/account');
       } else {
         toast.error("Something went wrong!");
       }

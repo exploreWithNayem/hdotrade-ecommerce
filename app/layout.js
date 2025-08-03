@@ -1,12 +1,12 @@
 import localFont from 'next/font/local'
-const myFont = localFont({ src: './../../public/fonts/lws4.woff2' })
+const myFont = localFont({ src: './../public/fonts/lws4.woff2' })
 
 
 
-import "./../globals.css";
+import "./globals.css";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
-import { getLang } from "@/languages/dynamicLangSwitch";
+// import { getLang } from "@/languages/dynamicLangSwitch";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import ToastProvider from "@/providers/ToastProvider";
@@ -25,18 +25,16 @@ export const metadata = {
 };
 
 export default async function RootLayout(props) {
-  const params = await props.params;
 
-  const {
-    lang
-  } = params;
+
+
 
   const {
     children
   } = props;
 
   const session = await auth();
-  const language = await getLang(lang);
+  // const language = await getLang(lang);
   await cartCleanUp();
   return (
     <html lang="en" className="bg-[#ffffff] ">
@@ -44,10 +42,10 @@ export default async function RootLayout(props) {
         <CartProvider>
           <body className={myFont.className} suppressHydrationWarning={true}>
             <ToastProvider>
-              <Navbar sideMenu={true} language={language} langCode={lang} />
+              <Navbar sideMenu={true} />
               {children}
             </ToastProvider>
-            <Footer footer={language?.footer} />
+            <Footer />
             <div id="modal-root-content" />
           </body>
         </CartProvider>

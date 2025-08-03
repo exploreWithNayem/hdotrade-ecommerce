@@ -3,7 +3,7 @@ import Link from "next/link";
 import AddCard from "./AddCard";
 import { InStock } from "@/public/icons/icons";
 
-export default function ProductCard({ product, langCode, lan, relatedProduct=false }) {
+export default function ProductCard({ product, relatedProduct=false }) {
   return (
     <div
       className={`bg-white p-3 rounded-[16px] border h-[486px] flex flex-col justify-between ${
@@ -31,7 +31,7 @@ export default function ProductCard({ product, langCode, lan, relatedProduct=fal
 
         {/* Title */}
         <p className="font-medium text-2xl my-2">
-          <Link href={`/${langCode}/shop/${product?.id}`}>{product?.name}</Link>
+          <Link href={`/shop/${product?.id}`}>{product?.name}</Link>
         </p>
 
         {/* Price */}
@@ -46,12 +46,12 @@ export default function ProductCard({ product, langCode, lan, relatedProduct=fal
       {/* Buttons */}
       <div className="grid grid-cols-2 gap-4 mt-5">
         <button className="font-bold text-[16px] text-red-600 border border-red-600 rounded-full py-3 cursor-pointer transition-all duration-300 hover:bg-red-600 hover:text-white">
-          <Link href={`/${langCode}/shop/${product?.id}`}>View Details</Link>
+          <Link href={`/shop/${product?.id}`}>View Details</Link>
         </button>
 
         <AddCard
           quantity={product?.quantity}
-          lan={lan?.shop?.addCard}
+        
           productId={product?.id}
           // userId={"1"}
         />

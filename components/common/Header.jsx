@@ -14,13 +14,12 @@ import {
 } from "@/public/icons/icons";
 import { useCart } from "@/providers/CartContext";
 
-export default function Header({ language, langCode }) {
+export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const header = language?.headers;
-    const { cart } = useCart();
+  const { cart } = useCart();
 
-    const cartLengths = cart?.items?.length || 0;
+  const cartLengths = cart?.items?.length || 0;
 
   const toggleMobileMenu = () => {
     setIsSearchOpen(false);
@@ -32,13 +31,13 @@ export default function Header({ language, langCode }) {
     setIsSearchOpen((prev) => !prev);
   };
 
-  const cartLength = cart?.items.length > 0 ? cart?.items.length: 0;
+  const cartLength = cart?.items.length > 0 ? cart?.items.length : 0;
 
   return (
     <header className="shadow-sm bg-[#061E3E]   relative z-50">
       <div className="container flex items-center justify-between lg:justify-evenly h-[80px] lg:h-[105px]">
         {/* Logo */}
-        <Link href={`/${langCode}`}>
+        <Link href="/">
           <Image
             src={logo}
             alt="logo"
@@ -50,31 +49,31 @@ export default function Header({ language, langCode }) {
 
         {/* Desktop Nav */}
         <div className="hidden lg:block">
-          <Search searchLan={header?.search} langCode={langCode} />
+          <Search />
         </div>
 
         <nav className="hidden lg:flex items-center gap-4 xl:gap-8 text-gray-200">
           <Link
-            href={`/${langCode}`}
+            href="/"
             className="text-white hover:text-[#e91325] transition-colors duration-300"
           >
             Home
           </Link>
 
           <Link
-            href={`/${langCode}/shop`}
+            href="/shop"
             className="text-white hover:text-[#e91325] transition-colors duration-300"
           >
             Store
           </Link>
           <Link
-            href={`/${langCode}/about`}
+            href="/about"
             className="text-white hover:text-[#e91325] transition-colors duration-300"
           >
             About Us
           </Link>
           <Link
-            href={`/${langCode}/contact`}
+            href="/contact"
             className="text-white hover:text-[#e91325] transition-colors duration-300"
           >
             Contact Us
@@ -84,7 +83,7 @@ export default function Header({ language, langCode }) {
             <LanguageSwitcher />
 
             <Link
-              href={`/${langCode}/add-card`}
+              href="/add-card"
               className="text-white hover:text-primary transition relative flex items-center gap-3"
             >
               <CartIcon />
@@ -129,35 +128,35 @@ export default function Header({ language, langCode }) {
         `}
       >
         <Link
-          href={`/${langCode}`}
+          href="/"
           className="block hover:text-primary"
           onClick={toggleMobileMenu}
         >
           Home
         </Link>
         <Link
-          href={`/${langCode}/shop`}
+          href="/shop"
           className="block hover:text-primary"
           onClick={toggleMobileMenu}
         >
           Store
         </Link>
         <Link
-          href={`/${langCode}/about`}
+          href="about"
           className="block hover:text-primary"
           onClick={toggleMobileMenu}
         >
           About Us
         </Link>
         <Link
-          href={`/${langCode}/contact`}
+          href="/contact"
           className="block hover:text-primary"
           onClick={toggleMobileMenu}
         >
           Contact Us
         </Link>
         <Link
-          href={`/${langCode}/add-card`}
+          href="/add-card"
           className="block hover:text-primary"
           onClick={toggleMobileMenu}
         >
@@ -180,7 +179,7 @@ export default function Header({ language, langCode }) {
           }
         `}
       >
-        <Search searchLan={header?.search} langCode={langCode} />
+        <Search />
       </div>
     </header>
   );
