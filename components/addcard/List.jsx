@@ -7,13 +7,14 @@ import { getProductById, incrementItemQuantity } from "@/database/queries";
 import { serverRevalidate } from "@/utils/serverRev";
 import { toast } from "react-toastify";
 import RemoveCard from "./RemoveCard";
+// import { cookies } from "next/headers";
 
-export default function List({ product, langCode, user }) {
+export default function List({ product, langCode, user, trackingId }) {
   const [quantity, setQuantity] = useState(product?.cartQuantity);
   const [totalPrice, setTotalPrice] = useState(product?.discount_price);
 
   const [isUpdating, setIsUpdating] = useState(false);
- const trackingId = localStorage.getItem("trackingId");
+
 
   function debounce(func, wait) {
     let timeout;
@@ -38,7 +39,7 @@ export default function List({ product, langCode, user }) {
           );
 
           const plus = true;
-          await incrementItemQuantity(trackingId,user?.id, product?.id, plus);
+          await incrementItemQuantity(trackingId, user?.id, product?.id, plus);
 
           await serverRevalidate();
         } else {
@@ -71,7 +72,7 @@ export default function List({ product, langCode, user }) {
           );
 
           const plus = false;
-          await incrementItemQuantity(trackingId,user?.id, product?.id, plus);
+          await incrementItemQuantity(trackingId, user?.id, product?.id, plus);
 
           await serverRevalidate();
         } catch (error) {
@@ -103,23 +104,24 @@ export default function List({ product, langCode, user }) {
 
   return (
     <>
-
-
-       <div className="flex items-center justify-between border gap-6 p-4 border-gray-200 rounded">
-        <div className="w-28">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between border gap-4 md:gap-6 p-4 border-gray-200 rounded w-full">
+        {/* Image */}
+        <div className="w-full md:w-28 ">
           <Image
             src={product?.image[0]}
             width={50}
             height={50}
             alt="product image"
-            className="w-full"
+            className="w-full max-w-[80px] md:max-w-none"
           />
         </div>
-        <div className="w-1/3">
-          <h2 className="text-gray-800 text-xl font-medium uppercase">
+
+        {/* Product Info */}
+        <div className="w-full md:w-1/3">
+          <h2 className="text-gray-800 text-lg md:text-xl font-medium uppercase">
             <Link href={`/${langCode}/shop/${product.id}`}>{product.name}</Link>
           </h2>
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 text-sm mt-1">
             Availability:
             {product.quantity >= 0 ? (
               <span className="text-green-600">
@@ -131,8 +133,14 @@ export default function List({ product, langCode, user }) {
             )}
           </p>
         </div>
-        <div className="text-primary text-lg font-semibold">${totalPrice}</div>
-        <div className="flex items-center space-x-3">
+
+        {/* Price */}
+        <div className="text-primary text-lg font-semibold w-full md:w-auto mt-2 md:mt-0">
+          ${totalPrice}
+        </div>
+
+        {/* Quantity Controls */}
+        <div className="flex items-center space-x-3 w-full md:w-auto mt-2 md:mt-0">
           <button
             className="px-3 py-1 bg-gray-200 rounded text-gray-700 hover:bg-gray-300"
             onClick={handleDecrease}
@@ -148,8 +156,15 @@ export default function List({ product, langCode, user }) {
           </button>
         </div>
 
-        <RemoveCard productId={product?.id} user={user} />
-      </div>  
+        {/* Remove Button */}
+        <div className="w-full justify-start md:w-auto mt-2 md:mt-0">
+          <RemoveCard
+            productId={product?.id}
+            // user={user}
+            trackingId={trackingId}
+          />
+        </div>
+      </div>
     </>
   );
 }

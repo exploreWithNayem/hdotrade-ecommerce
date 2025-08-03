@@ -598,35 +598,72 @@ export async function incrementItemQuantity(trackingId, userId, itemId, plus) {
 }
 
 
-
-export async function removeCardList(userId, productId) {
+export async function removeCardList( userId, trackingId, productId ) {
   await dbConnect();
-  const user = await userModel.findById(userId);
-  const item = user.cardlist.find((item) => item.itemId === productId);
-  let productObjectId;
-  if (mongoose.Types.ObjectId.isValid(productId)) {
-    productObjectId = new mongoose.Types.ObjectId(productId);
-  } else {
+console.log('tracking...............',trackingId);
+  // Validate productId
+  if (!mongoose.Types.ObjectId.isValid(productId)) {
     throw new Error("Invalid product ID");
   }
 
-  if (!user) {
-    throw new Error("User not found");
+  const productObjectId = new mongoose.Types.ObjectId(productId);
+
+  if (userId && mongoose.Types.ObjectId.isValid(userId)) {
+    const user = await userModel.findById(userId);
+    if (user && Array.isArray(user.cardlist)) {
+      const item = user.cardlist.find(
+        (item) => item.itemId.toString() === productId.toString()
+      );
+
+      // Remove item from user's cardlist
+      const result = await userModel.updateOne(
+        { _id: userId },
+        { $pull: { cardlist: { itemId: productId } } }
+      );
+
+      // Increment product quantity
+      if (item?.itemQuantity) {
+        await productModel.updateOne(
+          { _id: productObjectId },
+          { $inc: { quantity: item.itemQuantity } }
+        );
+      }
+
+      return { success: true, source: "user", result };
+    }
   }
 
-  const result = await userModel.updateOne(
-    { _id: userId },
-    { $pull: { cardlist: { itemId: productId } } }
+
+  if (!trackingId) {
+    throw new Error("Tracking ID is required for guest users");
+  }
+
+  // Remove item from guest cart
+  const guestCart = await cartModel.findOne({ trackingId });
+  if (!guestCart) {
+    throw new Error("Guest cart not found");
+  }
+
+  const guestItem = guestCart.items.find(
+    (item) => item.productId.toString() === productId.toString()
   );
 
-  // increse the product quantity by 1
-  await productModel.updateOne(
-    { _id: productObjectId },
-    { $inc: { quantity: +item?.itemQuantity } }
+  const result = await cartModel.updateOne(
+    { trackingId },
+    { $pull: { items: { productId: productId } } }
   );
 
-  return result;
+  // Increment product quantity
+  if (guestItem?.quantity) {
+    await productModel.updateOne(
+      { _id: productObjectId },
+      { $inc: { quantity: guestItem.quantity } }
+    );
+  }
+
+  return { success: true, source: "guest", result };
 }
+
 
 export async function removeWishList(userId, productId) {
   await dbConnect();

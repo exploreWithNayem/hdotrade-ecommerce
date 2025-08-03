@@ -13,6 +13,7 @@
     "@formatjs/intl-localematcher": "^0.5.4",
     "bcryptjs": "^2.4.3",
     "html2canvas": "^1.4.1",
+    "js-cookie": "^3.0.5",
     "jspdf": "^2.5.1",
     "mongodb": "^6.6.2",
     "mongoose": "^8.4.0",

@@ -11,6 +11,7 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import ToastProvider from "@/providers/ToastProvider";
 import { cartCleanUp } from "@/database/queries";
+import { CartProvider } from '@/providers/CartContext';
 
 export const metadata = {
   title: "Hdotrade- Home",
@@ -40,14 +41,16 @@ export default async function RootLayout(props) {
   return (
     <html lang="en" className="bg-[#ffffff] ">
       <SessionProvider session={session}>
-        <body className={myFont.className} suppressHydrationWarning={true}>
-          <ToastProvider>
-            <Navbar sideMenu={true} language={language} langCode={lang} />
-            {children}
-          </ToastProvider>
-          <Footer footer={language?.footer} />
-          <div id="modal-root-content" />
-        </body>
+        <CartProvider>
+          <body className={myFont.className} suppressHydrationWarning={true}>
+            <ToastProvider>
+              <Navbar sideMenu={true} language={language} langCode={lang} />
+              {children}
+            </ToastProvider>
+            <Footer footer={language?.footer} />
+            <div id="modal-root-content" />
+          </body>
+        </CartProvider>
       </SessionProvider>
     </html>
   );

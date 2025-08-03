@@ -4,7 +4,7 @@ import Link from "next/link";
 import LanguageSwitcher from "./LnagSwither";
 import Search from "./Search";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import logo from "@/public/client/logo.png";
 import {
   AngelDownIcon,
@@ -12,12 +12,15 @@ import {
   SearchIcon,
   ThreeDotIcon,
 } from "@/public/icons/icons";
-// import { getCart } from "@/database/queries";
+import { useCart } from "@/providers/CartContext";
 
 export default function Header({ language, langCode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const header = language?.headers;
+    const { cart } = useCart();
+
+    const cartLengths = cart?.items?.length || 0;
 
   const toggleMobileMenu = () => {
     setIsSearchOpen(false);
@@ -29,36 +32,7 @@ export default function Header({ language, langCode }) {
     setIsSearchOpen((prev) => !prev);
   };
 
-  const [cart, setCart] = useState(null);
   const cartLength = cart?.items.length > 0 ? cart?.items.length: 0;
-
-
-  useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const userId = localStorage.getItem("userId"); // or from auth context
-        const trackingId = localStorage.getItem("trackingId"); // fallback
-
-        const params = new URLSearchParams();
-
-        if (userId) params.append("userId", userId);
-        else if (trackingId) params.append("trackingId", trackingId);
-
-        const res = await fetch(`/api/get-cart?${params.toString()}`);
-        const data = await res.json();
-
-        if (res.ok) {
-          setCart(data);
-        } else {
-          console.log("Cart fetch error:", data.error);
-        }
-      } catch (error) {
-        console.log("Fetch failed:", error);
-      }
-    };
-
-    fetchCart();
-  }, []);
 
   return (
     <header className="shadow-sm bg-[#061E3E]   relative z-50">
@@ -187,7 +161,7 @@ export default function Header({ language, langCode }) {
           className="block hover:text-primary"
           onClick={toggleMobileMenu}
         >
-          Cart ({cartLength})
+          Cart ({cartLengths})
         </Link>
         <div className="pt-2 border-t border-gray-600">
           <LanguageSwitcher />

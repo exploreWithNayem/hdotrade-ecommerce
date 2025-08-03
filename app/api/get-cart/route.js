@@ -7,8 +7,10 @@ export const GET = async (request) => {
   await dbConnect();
 
   const { searchParams } = new URL(request.url);
+
   const userId = searchParams.get("userId");
   const trackingId = searchParams.get("trackingId");
+
 
   try {
     let cart = null;

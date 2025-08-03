@@ -1,88 +1,42 @@
-"use client";
+import { cookies } from "next/headers";
 import CardList from "@/components/addcard/CardList";
-import { useEffect, useState } from "react";
-// import CardList from "./CardList";
 
-export default function ClientCartWrapper({ langCode }) {
-  const [products, setProducts] = useState([]);
+export default async function CartPage({ params }) {
+  const cookieStore = await cookies();
+  const trackingId = cookieStore.get("trackingId")?.value;
 
-  console.log("products....", products);
+  let products = [];
 
-  useEffect(() => {
-    const fetchCart = async () => {
-      const trackingId = localStorage.getItem("trackingId");
-      const query = new URLSearchParams();
+  if (trackingId) {
+    try {
+      const query = new URLSearchParams({ trackingId }).toString();
 
-      if (trackingId) {
-        query.append("trackingId", trackingId);
+      console.log("query...", query);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/get-cart-list?${query}`,
+        {
+          cache: "no-store",
+        }
+      );
+
+      if (res.ok) {
+        products = await res.json();
+      } else {
+        console.error("Failed to fetch cart items:", res.status);
       }
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  }
 
-      try {
-        const res = await fetch(`/api/get-cart-list?${query.toString()}`);
-        const data = await res.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Failed to fetch cart:", error);
-      }
-    };
-
-    fetchCart();
-  }, []);
 
   return (
-    <div className="w-full max-w-[1440px]  mx-auto bg-[#ffffff] px-4">
-      <CardList langCode={langCode} products={products} />{" "}
+    <div>
+      <CardList
+        langCode={params.lang}
+        products={products}
+        trackingId={trackingId}
+      />
     </div>
   );
 }
-
-// import { auth } from "@/auth";
-// import CardList from "@/components/addcard/CardList";
-// import { getCardListData, getUserByMail } from "@/database/queries";
-// import { redirect } from "next/navigation";
-
-// export default async function page(props) {
-//   const params = await props.params;
-
-//   const {
-//     lang
-//   } = params;
-
-//   // const session = await auth();
-//   // if (!session) {
-//   //   redirect(`/${lang}/login`);
-//   // }
-
-//   // const user = await getUserByMail(session?.user?.email);
-
-//   // const listedProducts = await getCardListData(user?.id);
-
-//     const userId = null;
-//     const trackingId = localStorage.getItem("trackingId");
-
-//     const query = new URLSearchParams();
-
-//     if (userId) query.append("userId", userId);
-//     if (!userId && trackingId) query.append("trackingId", trackingId);
-
-//     const res = await fetch(`/api/get-cart-list?${query.toString()}`);
-//     const listedProducts = await res.json();
-
-//     console.log("cart list data....", listedProducts);
-
-//   return (
-//     <>
-//       <div className="container gap-6 pt-4 pb-16">
-//         <div className="mx-auto space-y-4 max-w-6xl">
-//           {/* <CardList /> */}
-
-//           <CardList
-//             // userId={user?.id}
-//             langCode={lang}
-//             products={listedProducts}
-//           />
-//         </div>
-//       </div>
-//     </>
-//   );
-// }

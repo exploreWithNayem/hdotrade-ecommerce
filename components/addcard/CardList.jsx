@@ -2,7 +2,7 @@ import Link from "next/link";
 import List from "./List";
 import NoCard from "./NoCard";
 
-const CardList = ({ langCode, products }) => {
+const CardList = ({ langCode, products, trackingId }) => {
   // Calculate subtotal
   const subtotal = products
     .reduce((total, p) => total + p.price * p.quantity, 0)
@@ -25,7 +25,12 @@ const CardList = ({ langCode, products }) => {
         <div className="space-y-4">
           {products.length > 0 ? (
             products.map((product, index) => (
-              <List product={product} langCode={langCode} key={index} />
+              <List
+                product={product}
+                langCode={langCode}
+                key={index}
+                trackingId={trackingId}
+              />
             ))
           ) : (
             <div className="flex justify-center">
