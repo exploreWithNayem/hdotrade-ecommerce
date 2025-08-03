@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@popperjs/core": "2.11.7",
+       "chart.js": "4.3.0",
     "@auth/mongodb-adapter": "^3.1.0",
     "@formatjs/intl-localematcher": "^0.5.4",
     "bcryptjs": "^2.4.3",

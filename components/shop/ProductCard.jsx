@@ -3,7 +3,7 @@ import Link from "next/link";
 import AddCard from "./AddCard";
 import { InStock } from "@/public/icons/icons";
 
-export default function ProductCard({ product, relatedProduct=false }) {
+export default function ProductCard({ product, relatedProduct = false }) {
   return (
     <div
       className={`bg-white p-3 rounded-[16px] border h-[486px] flex flex-col justify-between ${
@@ -49,12 +49,7 @@ export default function ProductCard({ product, relatedProduct=false }) {
           <Link href={`/shop/${product?.id}`}>View Details</Link>
         </button>
 
-        <AddCard
-          quantity={product?.quantity}
-        
-          productId={product?.id}
-          // userId={"1"}
-        />
+        <AddCard quantity={product?.quantity} productId={product?.id} />
       </div>
     </div>
   );
