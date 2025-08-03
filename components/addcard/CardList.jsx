@@ -10,7 +10,7 @@ const CardList = ({ langCode, products }) => {
 
   return (
     <div className="flex justify-center items-center  py-10 px-4">
-      <div className="bg-white rounded-2xl shadow-md max-w-xl w-full p-6">
+      <div className="bg-white rounded-2xl shadow-md max-w-[1000px] w-full p-6">
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Shopping Cart</h2>
