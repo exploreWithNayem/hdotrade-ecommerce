@@ -3,7 +3,6 @@ import CardList from "@/components/addcard/CardList";
 import { useEffect, useState } from "react";
 // import CardList from "./CardList";
 
-
 export default function ClientCartWrapper({ langCode }) {
   const [products, setProducts] = useState([]);
 
@@ -31,10 +30,9 @@ export default function ClientCartWrapper({ langCode }) {
   }, []);
 
   return (
-    <>
-    
+    <div className="w-full max-w-[1440px]  mx-auto bg-[#ffffff] px-4">
       <CardList langCode={langCode} products={products} />{" "}
-    </>
+    </div>
   );
 }
 

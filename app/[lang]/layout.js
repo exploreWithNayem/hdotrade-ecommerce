@@ -38,7 +38,7 @@ export default async function RootLayout(props) {
   const language = await getLang(lang);
   await cartCleanUp();
   return (
-    <html lang="en" className="bg-[#ffffff]">
+    <html lang="en" className="bg-[#ffffff] ">
       <SessionProvider session={session}>
         <body className={myFont.className} suppressHydrationWarning={true}>
           <ToastProvider>
