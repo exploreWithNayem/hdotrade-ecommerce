@@ -1,17 +1,12 @@
-import localFont from 'next/font/local'
-const myFont = localFont({ src: './../public/fonts/lws4.woff2' })
-
-
+import localFont from "next/font/local";
+const myFont = localFont({ src: "./../public/fonts/lws4.woff2" });
 
 import "./globals.css";
-import Navbar from "@/components/common/Navbar";
-import Footer from "@/components/common/Footer";
-// import { getLang } from "@/languages/dynamicLangSwitch";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import ToastProvider from "@/providers/ToastProvider";
 import { cartCleanUp } from "@/database/queries";
-import { CartProvider } from '@/providers/CartContext';
+import { CartProvider } from "@/providers/CartContext";
 
 export const metadata = {
   title: "Hdotrade- Home",
@@ -25,13 +20,7 @@ export const metadata = {
 };
 
 export default async function RootLayout(props) {
-
-
-
-
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   const session = await auth();
   // const language = await getLang(lang);
@@ -41,11 +30,8 @@ export default async function RootLayout(props) {
       <SessionProvider session={session}>
         <CartProvider>
           <body className={myFont.className} suppressHydrationWarning={true}>
-            <ToastProvider>
-              <Navbar sideMenu={true} />
-              {children}
-            </ToastProvider>
-            <Footer />
+            <ToastProvider>{children}</ToastProvider>
+
             <div id="modal-root-content" />
           </body>
         </CartProvider>

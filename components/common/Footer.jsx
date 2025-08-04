@@ -88,7 +88,7 @@ export default function Footer() {
             <span className="underline decoration-1 underline-offset-2">
               HDOGLOBALTRADE.
             </span>{" "}
-            2020
+            {new Date().getFullYear()}{" "}
           </div>
           <div className="">
             <span className="text-start sm:text-center">We accept</span>
