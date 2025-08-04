@@ -10,7 +10,6 @@ import {
   DashboardIcon,
   LoginIcon,
   ManufacturerIcon,
-  Orders,
   OrdersIcon,
   ProductsIcon,
 } from "@/public/icons/icons";
