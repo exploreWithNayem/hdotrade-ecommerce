@@ -1,6 +1,6 @@
 "use client";
 import {
-  AddAdminIcon,
+
   AddCategoryIcon,
   AddManufactureIcon,
   AddProductIcon,
@@ -39,7 +39,7 @@ export default function AdminSidebar() {
           {/* Brand */}
           <Link
             href="/auth/dashboard"
-            className=" text-[#0ea5e9] md:block text-left md:pb-2  mr-0 inline-block whitespace-nowrap text-[20px] font-bold uppercase  p-4 px-0"
+            className=" text-[#ef4444] md:block text-left md:pb-2  mr-0 inline-block whitespace-nowrap text-[20px] font-bold uppercase  p-4 px-0"
           >
             HDOTRADE Admin
           </Link>
@@ -83,7 +83,7 @@ export default function AdminSidebar() {
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
-            <h6 className="md:min-w-full text-[#0ea5e9]  text-[14px] uppercase  block pt-1 pb-4 no-underline">
+            <h6 className="md:min-w-full text-[#0ea5e9]  text-[16px] uppercase  block pt-1 pb-4 no-underline">
               Auth Pages
             </h6>
             {/* Navigation */}
@@ -91,16 +91,16 @@ export default function AdminSidebar() {
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               <li className="items-center">
                 <Link
-                  href="/auth/login"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2 "
+                  href="/auth/dashboard"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2 "
                 >
                   <DashboardIcon /> <span>Dashboard </span>
                 </Link>
               </li>
               <li className="items-center">
                 <Link
-                  href="/auth/login"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  href="/auth/dashboard/admins"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <AdminIcon />
                   Admins
@@ -110,17 +110,7 @@ export default function AdminSidebar() {
               <li className="items-center">
                 <Link
                   href="/auth/login"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
-                >
-                  <AddAdminIcon />
-                  Create An Admin
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link
-                  href="/auth/login"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <LoginIcon />
                   Logout
@@ -139,8 +129,8 @@ export default function AdminSidebar() {
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               <li className="items-center">
                 <Link
-                  href="/landing"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  href="/auth/dashboard/products"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <ProductsIcon />
                   Products
@@ -149,8 +139,8 @@ export default function AdminSidebar() {
 
               <li className="items-center">
                 <Link
-                  href="/profile"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  href="/auth/dashboard/add-product"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <AddProductIcon />
                   Add Product
@@ -159,8 +149,8 @@ export default function AdminSidebar() {
 
               <li className="items-center">
                 <Link
-                  href="/profile"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  href="/auth/dashboard/categories"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <CategoryIcon />
                   Categories
@@ -169,8 +159,8 @@ export default function AdminSidebar() {
 
               <li className="items-center">
                 <Link
-                  href="/profile"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  href="/auth/dashboard/add-category"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <AddCategoryIcon />
                   Add Category
@@ -179,8 +169,8 @@ export default function AdminSidebar() {
 
               <li className="items-center">
                 <Link
-                  href="/profile"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  href="/auth/dashboard/manufacturers"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <ManufacturerIcon />
                   Manufacturers
@@ -188,8 +178,8 @@ export default function AdminSidebar() {
               </li>
               <li className="items-center">
                 <Link
-                  href="/profile"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  href="/auth/dashboard/add-manufacturer"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <AddManufactureIcon />
                   Add Manufacturer
@@ -198,8 +188,8 @@ export default function AdminSidebar() {
 
               <li className="items-center">
                 <Link
-                  href="/profile"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  href="/auth/dashboard/carts"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <CartsIcon />
                   Carts
@@ -208,8 +198,8 @@ export default function AdminSidebar() {
 
               <li className="items-center">
                 <Link
-                  href="/landing"
-                  className="text-blueGray-700 hover:text-[#0ea5e9] text-xs uppercase py-3  flex   gap-2"
+                  href="/auth/dashboard/orders"
+                  className="text-blueGray-700 hover:text-[#0ea5e9] text-[14px] uppercase py-3  flex   gap-2"
                 >
                   <OrdersIcon />
                   Orders
