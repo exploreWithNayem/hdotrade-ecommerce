@@ -42,13 +42,13 @@ export default function Banner() {
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx}>
             <div className="relative w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[429px] rounded-xl overflow-hidden shadow">
-              {/* Background Image */}
+
               <Image
                 src={slide.image}
                 alt={`Slide ${idx + 1}`}
                 fill
+                unoptimized
                 className="object-cover"
-                sizes="(max-width: 768px) 100vw, 1000px"
                 priority={idx === 0}
               />
 

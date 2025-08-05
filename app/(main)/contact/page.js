@@ -2,7 +2,7 @@ import { FiPhone } from "react-icons/fi";
 import { HiOutlineMail } from "react-icons/hi";
 import { IoLocationOutline } from "react-icons/io5";
 import ContactImg from "@/public/client/contact.png";
-import ContactImg2 from "@/public/client/contact2.png";
+import ContactImg2 from "@/public/client/banner/contact.png";
 import Image from "next/image";
 export default function page() {
   return (
@@ -150,6 +150,7 @@ export default function page() {
             height={832}
             className="rounded-2xl w-full h-auto"
             alt="contact img"
+            unoptimized
           />
         </div>
       </div>

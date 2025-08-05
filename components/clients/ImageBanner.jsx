@@ -1,5 +1,5 @@
 import Image from "next/image";
-import banner1 from "@/public/client/imageBanner1.png";
+import banner1 from "@/public/client/banner/imageBanner1.png";
 import banner2 from "@/public/client/imageBanner2.png";
 import banner3 from "@/public/client/feature.jpg";
 import { FaWhatsapp, FaEnvelope } from "react-icons/fa";
@@ -13,6 +13,7 @@ export default function ImageBanners() {
           src={banner3}
           alt="Banner 1"
           fill
+          unoptimized
           className="object-cover"
           sizes="(max-width: 768px) 100vw, 1000px"
           priority
@@ -52,10 +53,11 @@ export default function ImageBanners() {
         >
           <Image
             src={img}
-            alt={`Banner ${idx + 2}`}
+            alt={`Slide ${idx + 1}`}
             fill
+            unoptimized
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 1000px"
+            priority={idx === 0}
           />
         </div>
       ))}

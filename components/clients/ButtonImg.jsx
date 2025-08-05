@@ -1,5 +1,5 @@
-import banner1 from "@/public/client/buttonimg.png";
-import banner2 from "@/public/client/buttonimg2.png";
+import banner1 from "@/public/client/banner/button1.png";
+import banner2 from "@/public/client/banner/button2.png";
 
 export default function ButtonImg() {
   return (

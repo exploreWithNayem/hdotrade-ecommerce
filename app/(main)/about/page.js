@@ -1,6 +1,6 @@
 import Image from "next/image";
 import about1 from "@/public/client/about.png";
-import mapImg from "@/public/client/map.png";
+import mapImg from "@/public/client/map2.png";
 import teamImg from "@/public/client/team.jpg";
 import OurBrand from "@/components/clients/OurBrand";
 export default function About() {
@@ -63,6 +63,8 @@ export default function About() {
                   className="w-full h-auto md:h-[610px] rounded-lg shadow-md object-cover"
                   width={628}
                   height={610}
+                  // fill
+                  unoptimized
                 />
               </div>
             </div>
@@ -79,6 +81,8 @@ export default function About() {
                 height={600}
                 className=" lg:w-[1280px] h-auto rounded-md shadow object-cover"
                 priority
+                // fill
+                unoptimized
               />
             </div>
           </section>
@@ -93,6 +97,7 @@ export default function About() {
                 className="w-full h-auto lg:h-[859px] rounded-md shadow object-cover"
                 width={800}
                 height={600}
+                unoptimized
               />
             </div>
             <h2 className="text-[48px] sm:text-3xl font-bold mb-6">

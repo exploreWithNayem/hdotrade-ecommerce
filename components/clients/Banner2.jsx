@@ -1,4 +1,4 @@
-import banner1 from "@/public/client/section2.webp";
+import banner1 from "@/public/client/banner/banner2.png";
 import Image from "next/image";
 
 export default function Banner2() {
@@ -8,6 +8,7 @@ export default function Banner2() {
         src={banner1}
         alt="banner1"
         fill
+        unoptimized
         className="object-cover rounded-xl"
         priority
       />
