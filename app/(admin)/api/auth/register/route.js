@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 
 export const POST = async (request) => {
   await dbConnect();
-  const { name, email, password } = await request.json();
+  const { name, email, password, isAdmin } = await request.json();
 
   console.log('from api..',name,email, password)
 
@@ -15,14 +15,18 @@ export const POST = async (request) => {
     name,
     email,
     password: hashedPassword,
+    isAdmin,
   };
 
   try {
     await userModel.create(newUser);
+
+
     return new NextResponse("User has been created", {
       status: 201,
     });
   } catch (e) {
+
     return new NextResponse(e.message, {
       status: 500,
     });

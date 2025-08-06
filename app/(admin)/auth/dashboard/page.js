@@ -3,9 +3,7 @@ import CardPageVisits from "./component/CardPageVisit";
 
 import HeaderStats from "./component/AdminStats";
 
-
 export default async function page() {
-
 
 
   return (

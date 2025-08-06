@@ -3,9 +3,14 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import logo from "@/public/client/logo.png";
-
+import { login } from "@/action";
+import { useRouter } from "next/navigation";
+import { serverRevalidate } from "@/utils/serverRev";
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
+
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,10 +32,9 @@ export default function LoginPage() {
 
     try {
       // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Replace this with your actual login logic
-      console.log("Logged in with:", { email, password });
+      await login({ email, password });
+      await serverRevalidate();
+      router.push("/auth/dashboard");
     } catch (error) {
       console.error("Login error:", error);
     } finally {
