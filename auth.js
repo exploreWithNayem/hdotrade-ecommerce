@@ -11,7 +11,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   adapter: MongoDBAdapter(clientPromise),
   session: {
     strategy: "jwt",
+    maxAge: 60 
   },
+
   trustHost: true,
   providers: [
     Credentials({
