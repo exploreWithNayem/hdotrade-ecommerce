@@ -1,41 +1,12 @@
-
 "use client";
 
-import { useState } from "react";
+import { getProducts } from "@/database/queries";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function AllProducts() {
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Wireless Headphones",
-      image: "/products/headphones.jpg",
-      priceUSD: 99,
-      priceEUR: 89,
-      stock: 25,
-      category: "Electronics",
-      manufacturer: "Sony",
-    },
-    {
-      id: 2,
-      name: "Smart Watch",
-      image: "/products/watch.jpg",
-      priceUSD: 199,
-      priceEUR: 180,
-      stock: 12,
-      category: "Wearables",
-      manufacturer: "Apple",
-    },
-    {
-      id: 3,
-      name: "Gaming Mouse",
-      image: "/products/mouse.jpg",
-      priceUSD: 49,
-      priceEUR: 44,
-      stock: 70,
-      category: "Accessories",
-      manufacturer: "Logitech",
-    },
-  ]);
+  const [products, setProducts] = useState([]);
+
 
   const handleEdit = (id) => {
     alert("Edit product with ID: " + id);
@@ -47,6 +18,23 @@ export default function AllProducts() {
       setProducts((prev) => prev.filter((p) => p.id !== id));
     }
   };
+
+
+
+  useEffect(() => {
+    const productsFetch = async () => {
+      try {
+        const fetchedProducts = await getProducts();
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
+
+    productsFetch();
+  }, []);
+
+  console.log('products..', products)
 
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
@@ -76,10 +64,12 @@ export default function AllProducts() {
                   className="hover:bg-gray-50 transition-all duration-150"
                 >
                   <td className="px-4 py-2 border">
-                    <img
-                      src={product.image}
+                    <Image
+                      src={product?.image[0]}
                       alt={product.name}
-                      className="h-12 w-12 object-cover rounded"
+            
+                      width={100}
+                      height={100}
                     />
                   </td>
                   <td className="px-4 py-2 border font-medium">
@@ -87,12 +77,12 @@ export default function AllProducts() {
                   </td>
                   <td className="px-4 py-2 border">{product.manufacturer}</td>
                   <td className="px-4 py-2 border text-green-600 font-semibold">
-                    ${product.priceUSD}
+                    ${product?.discount_price}
                   </td>
                   <td className="px-4 py-2 border text-blue-600 font-semibold">
                     €{product.priceEUR}
                   </td>
-                  <td className="px-4 py-2 border">{product.stock}</td>
+                  <td className="px-4 py-2 border">{product?.quantity}</td>
                   <td className="px-4 py-2 border">{product.category}</td>
                   <td className="px-4 py-2 border text-center">
                     <div className="flex justify-center gap-2">

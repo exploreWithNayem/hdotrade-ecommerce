@@ -1,7 +1,5 @@
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import FacebookProvider from "next-auth/providers/facebook";
 import clientPromise from "./database/mongoClientPromise";
 
 import Credentials from "next-auth/providers/credentials";
@@ -16,24 +14,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   },
   trustHost: true,
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET,
-
-      //for adding authorization every time user would be asked to continue with google
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
-    }),
-
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    }),
 
     Credentials({
       credentials: {

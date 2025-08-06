@@ -48,19 +48,39 @@ const validate = () => {
 };
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (Object.keys(validationErrors).length === 0) {
-      // In real app, submit to server here
-      const newAdmin = {
+  const validationErrors = validate();
+  setErrors(validationErrors);
+
+  if (Object.keys(validationErrors).length === 0) {
+    const newAdmin = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newAdmin),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Something went wrong");
+      }
+
+      // Optional callback to parent
+      onAdd?.({
         id: Date.now(),
-        username: formData.name,
-        email: formData.email,
-      };
-      onAdd?.(newAdmin); // Optional callback for parent component
+        ...newAdmin,
+      });
 
       // Reset form
       setFormData({
@@ -71,8 +91,11 @@ const validate = () => {
       });
       setSuccess("Admin successfully added.");
       setTimeout(() => setSuccess(""), 3000);
+    } catch (error) {
+      setErrors({ api: error.message });
     }
-  };
+  }
+};
 
   return (
     <div className="w-full md:w-[600px] bg-white rounded shadow p-6">

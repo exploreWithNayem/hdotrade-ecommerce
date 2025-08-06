@@ -7,6 +7,8 @@ export const POST = async (request) => {
   await dbConnect();
   const { name, email, password } = await request.json();
 
+  console.log('from api..',name,email, password)
+
   const hashedPassword = await bcrypt.hash(password, 5);
 
   const newUser = {

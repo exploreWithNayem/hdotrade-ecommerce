@@ -455,69 +455,6 @@ export async function getCardListData(id) {
   }
 }
 
-// export async function incrementItemQuantity(trackingId,userId, itemId, plus) {
-
-//   console.log('tracking..................',trackingId)
-//   try {
-//     await dbConnect();
-
-//     // Ensure the product ID is a valid ObjectId
-//     let productObjectId;
-//     if (mongoose.Types.ObjectId.isValid(itemId)) {
-//       productObjectId = new mongoose.Types.ObjectId(itemId);
-//     } else {
-//       throw new Error("Invalid product ID");
-//     }
-
-//     if (plus) {
-//       // Increment item quantity in user's card list
-//       const userUpdateResult = await userModel.updateOne(
-//         { _id: userId, "cardlist.itemId": itemId },
-//         { $inc: { "cardlist.$.itemQuantity": 1 } }
-//       );
-
-//       // Decrement product quantity by 1
-//       const productUpdateResult = await productModel.updateOne(
-//         { _id: productObjectId },
-//         { $inc: { quantity: -1 } }
-//       );
-
-//       // Log the results for debugging
-//       console.log("User Update Result:", userUpdateResult);
-//       console.log("Product Update Result:", productUpdateResult);
-//     } else {
-//       // Decrement item quantity in user's card list only if itemQuantity is greater than 1
-//       const userUpdateResult = await userModel.updateOne(
-//         {
-//           _id: userId,
-//           "cardlist.itemId": itemId,
-//           "cardlist.itemQuantity": { $gt: 1 },
-//         },
-//         { $inc: { "cardlist.$.itemQuantity": -1 } }
-//       );
-
-//       // Check if the user update was successful before incrementing product quantity
-//       if (userUpdateResult.modifiedCount > 0) {
-//         const productUpdateResult = await productModel.updateOne(
-//           { _id: productObjectId },
-//           { $inc: { quantity: 1 } }
-//         );
-
-//         // Log the results for debugging
-//         console.log("User Update Result:", userUpdateResult);
-//         console.log("Product Update Result:", productUpdateResult);
-//       }
-//     }
-//   } catch (error) {
-//     console.error(
-//       `Error updating itemQuantity for itemId: ${itemId} in cardlist`,
-//       error
-//     );
-//     throw error; // Re-throw the error for higher-level error handling
-//   }
-// }
-
-
 
 export async function incrementItemQuantity(trackingId, userId, itemId, plus) {
  
@@ -600,7 +537,6 @@ export async function incrementItemQuantity(trackingId, userId, itemId, plus) {
 
 export async function removeCardList( userId, trackingId, productId ) {
   await dbConnect();
-console.log('tracking...............',trackingId);
   // Validate productId
   if (!mongoose.Types.ObjectId.isValid(productId)) {
     throw new Error("Invalid product ID");
