@@ -215,51 +215,132 @@ export async function searchProducts(query) {
   return replaceMongoIdInArray(products);
 }
 
+// export async function getProducts(filCat, query, fillPrice, fillSize) {
+//   await dbConnect();
+
+//   let products = await productModel.find().lean();
+//   let priceFiltered = false;
+
+//   //search for products........
+//   if (query) {
+//     const regexName = new RegExp(
+//       query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"),
+//       "i"
+//     );
+//     products = await productModel.find({ name: { $regex: regexName } }).lean();
+//   }
+
+//   // filter by category .......
+//   if (filCat) {
+//     const filCatToMatch = filCat.split("|");
+
+//     products = products.filter((product) => {
+//       return filCatToMatch.includes(product.category.toString());
+//     });
+//   }
+
+//   // filter by price..........
+//   if (fillPrice) {
+//     const priceArray = fillPrice.split("|");
+//     const min = priceArray[0];
+//     const max = priceArray[1];
+//     products = await productModel
+//       .find({
+//         price: { $gte: min, $lte: max },
+//       })
+//       .lean();
+
+//     priceFiltered = true;
+//   }
+
+//   // filter by size.........
+//   if (fillSize && priceFiltered) {
+//     products = products.filter((product) => product.sizes.includes(fillSize));
+//   } else if (fillSize && !priceFiltered) {
+//     products = await productModel.find({ sizes: { $in: [fillSize] } }).lean();
+//   }
+//   return replaceMongoIdInArray(products);
+// }
+
 export async function getProducts(filCat, query, fillPrice, fillSize) {
-  await dbConnect();
+  try {
+    await dbConnect();
 
-  let products = await productModel.find().lean();
-  let priceFiltered = false;
+    // Base query builder
+    const buildQuery = () => {
+      const queryConditions = {};
 
-  //search for products........
-  if (query) {
-    const regexName = new RegExp(
-      query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"),
-      "i"
-    );
-    products = await productModel.find({ name: { $regex: regexName } }).lean();
+      // Search by name
+      if (query) {
+        const regexName = new RegExp(
+          query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"),
+          "i"
+        );
+        queryConditions.name = { $regex: regexName };
+      }
+
+      // Filter by price range
+      if (fillPrice) {
+        const [min, max] = fillPrice.split("|").map(Number);
+        queryConditions["price.usd"] = { $gte: min, $lte: max };
+      }
+
+      return queryConditions;
+    };
+
+    // Main query execution
+    let products = await productModel.find(buildQuery()).lean();
+
+    // Filter by category (client-side as it uses array includes)
+    if (filCat) {
+      const categoriesToMatch = filCat.split("|");
+      products = products.filter((product) =>
+        categoriesToMatch.includes(product.categoryId?.toString())
+      );
+    }
+
+    // Filter by size (optimized to use database when possible)
+    if (fillSize) {
+      // If we already have a filtered result set, filter client-side
+      if (query || filCat || fillPrice) {
+        products = products.filter((product) =>
+          product.sizes?.includes(fillSize)
+        );
+      } else {
+        // Otherwise, let MongoDB handle the filtering
+        products = await productModel
+          .find({
+            sizes: { $in: [fillSize] },
+          })
+          .lean();
+      }
+    }
+
+    // Proper serialization
+    const serializedProducts = products.map((product) => ({
+      ...product,
+      _id: product._id.toString(),
+      categoryId: product.categoryId?.toString(),
+      manufacturerId: product.manufacturerId?.toString(),
+      createdAt: product.createdAt?.toISOString(),
+      updatedAt: product.updatedAt?.toISOString(),
+      price: {
+        usd: product.price?.usd || 0,
+        eur: product.price?.eur || 0,
+      },
+      discountPrice: product.discountPrice
+        ? {
+            usd: product.discountPrice.usd || undefined,
+            eur: product.discountPrice.eur || undefined,
+          }
+        : undefined,
+    }));
+
+    return serializedProducts;
+  } catch (error) {
+    console.error("Error in getProducts:", error);
+    throw new Error("Failed to fetch products");
   }
-
-  // filter by category .......
-  if (filCat) {
-    const filCatToMatch = filCat.split("|");
-
-    products = products.filter((product) => {
-      return filCatToMatch.includes(product.category.toString());
-    });
-  }
-
-  // filter by price..........
-  if (fillPrice) {
-    const priceArray = fillPrice.split("|");
-    const min = priceArray[0];
-    const max = priceArray[1];
-    products = await productModel
-      .find({
-        price: { $gte: min, $lte: max },
-      })
-      .lean();
-
-    priceFiltered = true;
-  }
-
-  // filter by size.........
-  if (fillSize && priceFiltered) {
-    products = products.filter((product) => product.sizes.includes(fillSize));
-  } else if (fillSize && !priceFiltered) {
-    products = await productModel.find({ sizes: { $in: [fillSize] } }).lean();
-  }
-  return replaceMongoIdInArray(products);
 }
 
 export async function getProductById(productId) {

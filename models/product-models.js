@@ -1,78 +1,186 @@
-import mongoose, { Schema } from "mongoose";
+// import mongoose, { Schema } from "mongoose";
 
-const productSchema = new Schema({
-  name: {
-    required: true,
-    type: String,
-  },
-  image: {
-    required: false,
-    type: [String], // More specific than just Array
-  },
-  price: {
-    required: true,
-    type: Number,
-  },
-  discount_price: {
-    required: false,
-    type: Number,
-  },
-  reviewsNumber: {
-    required: false,
-    type: Number,
-  },
-  ratings: {
-    required: false,
-    type: Number,
-  },
+// const productSchema = new Schema({
+//   name: { type: String, required: true },
+//   image: { type: [String], required: false },
+//   price: {
+//     usd: { type: Number, required: true },
+//     eur: { type: Number, required: true },
+//     required: false,
+//   },
+//   discount_price: {
+//     usd: { type: Number },
+//     eur: { type: Number },
+//     required: false,
+//   },
+//   reviewsNumber: { type: Number, required: false },
+//   ratings: { type: Number, required: false },
+//   manufacturerId: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: "manufacturers",
+//     required: false,
+//   },
+//   categoryId: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: "categories",
+//     required: false,
+//   },
+//   description: { type: String, required: true },
 
-  // Replacing "brand" with manufacturerId (linked to manufacturers collection)
-  manufacturerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "manufacturers",
-    required: false,
-  },
+//   soldCounts: { type: Number, default: 0 },
+//   published: { type: Date, default: Date.now },
+//   quantity: { type: Number, required: true },
 
-  // Replacing "category" with categoryId (linked to categories collection)
-  categoryId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "categories",
-    required: false,
-  },
+// });
 
-  description: {
-    required: true,
-    type: String,
-  },
-  sizes: {
-    required: false,
-    type: [String],
-  },
-  colors: {
-    required: false,
-    type: [String],
-  },
-  soldCounts: {
-    required: false,
-    type: Number,
-    default: 0,
-  },
-  published: {
-    required: false,
-    type: Date,
-    default: Date.now,
-  },
-  quantity: {
-    required: true,
-    type: Number,
-  },
+// export const productModel =
+//   mongoose.models.products ?? mongoose.model("products", productSchema);
 
-  details: {
-    material: { type: String },
-    dimensions: { type: String },
-    weight: { type: String },
+import mongoose from "mongoose";
+
+const productSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Product name is required"],
+      trim: true,
+      maxlength: [100, "Product name cannot exceed 100 characters"],
+    },
+    image: {
+      type: String,
+      required: false,
+    },
+    price: {
+      usd: {
+        type: Number,
+        required: true,
+        min: [0, "Price cannot be negative"],
+      },
+      eur: {
+        type: Number,
+        required: true,
+        min: [0, "Price cannot be negative"],
+      },
+    },
+    discountPrice: {
+      usd: {
+        type: Number,
+        required: false,
+        min: [0, "Discount price cannot be negative"],
+        validate: {
+          validator: function (value) {
+            return !value || value < this.price.usd;
+          },
+          message: "Discount price must be lower than regular price",
+        },
+      },
+      eur: {
+        type: Number,
+        required: false,
+        min: [0, "Discount price cannot be negative"],
+        validate: {
+          validator: function (value) {
+            return !value || value < this.price.eur;
+          },
+          message: "Discount price must be lower than regular price",
+        },
+      },
+    },
+    reviewsNumber: {
+      type: Number,
+      required: false,
+      default: 0,
+      min: [0, "Reviews number cannot be negative"],
+    },
+    ratings: {
+      type: Number,
+      required: false,
+      default: 0,
+      min: [0, "Rating cannot be less than 0"],
+      max: [5, "Rating cannot be more than 5"],
+    },
+    manufacturerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Manufacturer",
+      required: false,
+      index: true,
+    },
+    categoryId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: false,
+      index: true,
+    },
+    description: {
+      type: String,
+      required: [true, "Product description is required"],
+      trim: true,
+      minlength: [10, "Description must be at least 10 characters long"],
+      maxlength: [2000, "Description cannot exceed 2000 characters"],
+    },
+    soldCount: {
+      type: Number,
+      required: false,
+      default: 0,
+      min: [0, "Sold count cannot be negative"],
+    },
+    published: {
+      type: Date,
+      required: false,
+      default: Date.now,
+      immutable: true,
+    },
+    quantity: {
+      type: Number,
+      required: [true, "Product quantity is required"],
+      min: [0, "Quantity cannot be negative"],
+    },
+    isActive: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
+    features: {
+      type: [String],
+      required: false,
+      default: [],
+    },
+    sku: {
+      type: String,
+      required: false,
+      unique: true,
+      sparse: true,
+      trim: true,
+      uppercase: true,
+    },
   },
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
+
+// Indexes
+productSchema.index({ name: "text", description: "text" });
+productSchema.index({ price: 1 });
+productSchema.index({ quantity: 1 });
+
+// Virtual property
+productSchema.virtual("inStock").get(function () {
+  return this.quantity > 0;
+});
+
+// Pre-save validation
+productSchema.pre("save", function (next) {
+  if (this.discountPrice?.usd && this.discountPrice.usd >= this.price.usd) {
+    throw new Error("USD discount price must be lower than regular price");
+  }
+  if (this.discountPrice?.eur && this.discountPrice.eur >= this.price.eur) {
+    throw new Error("EUR discount price must be lower than regular price");
+  }
+  next();
 });
 
 export const productModel =
-  mongoose.models.products ?? mongoose.model("products", productSchema);
+  mongoose.models.products || mongoose.model("products", productSchema);

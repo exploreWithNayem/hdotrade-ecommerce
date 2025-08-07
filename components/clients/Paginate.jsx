@@ -19,15 +19,16 @@ export default function ClientPaginatedProducts({ products }) {
   const offset = currentPage * itemsPerPage;
   const currentItems = products.slice(offset, offset + itemsPerPage);
 
+  console.log("currentItems...", currentItems);
+  const activeProducts = currentItems.filter((item) => item.isActive === true);
+
+  console.log("data...", activeProducts);
+
   return (
     <div className="col-span-3 max-w-[1280px] w-full mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
-        {currentItems.map((product) => (
-          <ProductCard
-
-            key={product?.id}
-            product={product}
-          />
+        {activeProducts.map((product) => (
+          <ProductCard key={product?._id} product={product} />
         ))}
       </div>
 

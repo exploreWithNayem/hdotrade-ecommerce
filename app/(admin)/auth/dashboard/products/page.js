@@ -3,7 +3,7 @@
 import { getProducts } from "@/database/queries";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
+import placeholder from "@/public/client/banner/placeholder.png";
 export default function AllProducts() {
   const [products, setProducts] = useState([]);
 
@@ -24,6 +24,7 @@ export default function AllProducts() {
   useEffect(() => {
     const productsFetch = async () => {
       try {
+     
         const fetchedProducts = await getProducts();
         setProducts(fetchedProducts);
       } catch (error) {
@@ -34,7 +35,7 @@ export default function AllProducts() {
     productsFetch();
   }, []);
 
-  console.log('products..', products)
+  console.log('products here..', products)
 
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
@@ -60,35 +61,36 @@ export default function AllProducts() {
             <tbody>
               {products.map((product) => (
                 <tr
-                  key={product.id}
+                  key={product._id}
                   className="hover:bg-gray-50 transition-all duration-150"
                 >
-                  <td className="px-4 py-2 border">
+                  <td className="px-4 py-2 border flex justify-center">
                     <Image
-                      src={product?.image[0]}
-                      alt={product.name}
-            
-                      width={100}
-                      height={100}
+                      src={product?.image || placeholder}
+                      alt={product?.name}
+                      width={80}
+                      height={80}
                     />
                   </td>
                   <td className="px-4 py-2 border font-medium">
-                    {product.name}
+                    {product?.name}
                   </td>
-                  <td className="px-4 py-2 border">{product.manufacturer}</td>
+                  <td className="px-4 py-2 border">
+                    {product?.manufacturerId}
+                  </td>
                   <td className="px-4 py-2 border text-green-600 font-semibold">
-                    ${product?.discount_price}
+                    ${product?.price?.usd}
                   </td>
                   <td className="px-4 py-2 border text-blue-600 font-semibold">
-                    €{product.priceEUR}
+                    €{product?.price?.eur}
                   </td>
                   <td className="px-4 py-2 border">{product?.quantity}</td>
-                  <td className="px-4 py-2 border">{product.category}</td>
+                  <td className="px-4 py-2 border">{product?.categoryId}</td>
                   <td className="px-4 py-2 border text-center">
                     <div className="flex justify-center gap-2">
                       {/* Edit Button */}
                       <button
-                        onClick={() => handleEdit(product.id)}
+                        onClick={() => handleEdit(product?._id)}
                         className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition"
                       >
                         ✏️ Edit
@@ -96,7 +98,7 @@ export default function AllProducts() {
 
                       {/* Delete Button */}
                       <button
-                        onClick={() => handleDelete(product.id)}
+                        onClick={() => handleDelete(product?._id)}
                         className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-red-600 border border-red-600 rounded hover:bg-red-50 transition"
                       >
                         🗑 Delete
