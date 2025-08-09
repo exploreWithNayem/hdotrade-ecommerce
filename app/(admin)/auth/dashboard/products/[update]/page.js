@@ -7,7 +7,6 @@ export default async function page(props) {
 
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
-      update product...... {update}
       <AddUpdate updateId={update} />
     </div>
   );
