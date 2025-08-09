@@ -4,7 +4,7 @@ import NoCard from "./NoCard";
 
 const CardList = ({ products, trackingId }) => {
   const subtotal = products
-    .reduce((total, p) => total + p.discount_price * p.cartQuantity, 0)
+    .reduce((total, p) => total + p.discountPrice?.usd * p.cartQuantity, 0)
     .toFixed(2);
 
   return (
@@ -48,7 +48,7 @@ const CardList = ({ products, trackingId }) => {
           {products.length > 0 ? (
             <Link
               href={`/checkout`}
-              className="w-full py-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 text-white font-semibold text-sm text-center hover:from-blue-500 hover:to-blue-700 transition duration-300"
+              className="w-full py-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 text-white  text-sm text-center hover:from-blue-500 hover:to-blue-700 transition duration-300"
             >
               Checkout
             </Link>

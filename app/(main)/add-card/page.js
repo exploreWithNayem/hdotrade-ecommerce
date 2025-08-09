@@ -28,7 +28,6 @@ export default async function CartPage() {
     }
   }
 
-  console.log("list products...", products);
 
   return (
     <div>

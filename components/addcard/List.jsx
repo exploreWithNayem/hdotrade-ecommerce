@@ -181,12 +181,16 @@ import RemoveCard from "./RemoveCard";
 import placeholder from "@/public/client/banner/placeholder.png";
 export default function List({ product, user, trackingId }) {
   const [quantity, setQuantity] = useState(product?.cartQuantity || 1);
+
+ 
   const [isUpdating, setIsUpdating] = useState(false);
 
   // Calculate total price directly from state
   const totalPrice = useMemo(() => {
     return (quantity * (product?.discountPrice?.usd || 0)).toFixed(2);
   }, [quantity, product?.discountPrice?.usd]);
+
+
 
   // Memoized debounce functions
   const debouncedUpdate = useMemo(() => {
