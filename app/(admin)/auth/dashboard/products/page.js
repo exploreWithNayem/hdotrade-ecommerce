@@ -1,30 +1,29 @@
 "use client";
 
-import { getProducts } from "@/database/queries";
+import { deleteProductById, getProducts } from "@/database/queries";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import placeholder from "@/public/client/banner/placeholder.png";
+import { toast } from "react-toastify";
+import Link from "next/link";
 export default function AllProducts() {
   const [products, setProducts] = useState([]);
 
-
-  const handleEdit = (id) => {
-    alert("Edit product with ID: " + id);
-  };
-
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     const confirmed = confirm("Are you sure you want to delete this product?");
     if (confirmed) {
       setProducts((prev) => prev.filter((p) => p.id !== id));
+
+      await deleteProductById(id);
+      toast.info("Removed the product!", {
+        position: "bottom-right",
+      });
     }
   };
-
-
 
   useEffect(() => {
     const productsFetch = async () => {
       try {
-     
         const fetchedProducts = await getProducts();
         setProducts(fetchedProducts);
       } catch (error) {
@@ -34,8 +33,6 @@ export default function AllProducts() {
 
     productsFetch();
   }, []);
-
-  console.log('products here..', products)
 
   return (
     <div className="relative md:ml-64 bg-blueGray-100 mt-[40px]">
@@ -89,16 +86,15 @@ export default function AllProducts() {
                   <td className="px-4 py-2 border text-center">
                     <div className="flex justify-center gap-2">
                       {/* Edit Button */}
-                      <button
-                        onClick={() => handleEdit(product?._id)}
+                      <Link
+                        href={`/auth/dashboard/products/${product?.id}`}
                         className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition"
                       >
                         ✏️ Edit
-                      </button>
+                      </Link>
 
-                      {/* Delete Button */}
                       <button
-                        onClick={() => handleDelete(product?._id)}
+                        onClick={() => handleDelete(product?.id)}
                         className="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-red-600 border border-red-600 rounded hover:bg-red-50 transition"
                       >
                         🗑 Delete

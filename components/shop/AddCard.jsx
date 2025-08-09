@@ -1,6 +1,6 @@
 "use client";
 
-import { addToCart, removeWishList } from "@/database/queries";
+import { addToCart } from "@/database/queries";
 import { useCart } from "@/providers/CartContext";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
@@ -11,7 +11,7 @@ export default function AddCard({
   productId,
   userId,
   quantity,
-  fromWish,
+
 }) {
   const { fetchCart } = useCart();
 
@@ -47,10 +47,6 @@ export default function AddCard({
 
       if (response?.success) {
         toast.success("Added to cart", { position: "bottom-right" });
-
-        if (fromWish && userId) {
-          await removeWishList(userId, productId);
-        }
         await serverRevalidate();
         await fetchCart();
       } else {

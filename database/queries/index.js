@@ -133,7 +133,6 @@ export async function getSubcategoriesByCategory(categoryId) {
 
 // category end---------------------------------------------------------------
 
-
 // user start---------------------------------------------------------------
 
 export async function getUserByMail(email) {
@@ -174,7 +173,6 @@ export async function getUserById(id) {
 }
 // user end---------------------------------------------------------------
 
-
 // products start---------------------------------------------------------------
 /**
  * Fetches cart by userId (if logged in) or by trackingId (for guest users)
@@ -201,7 +199,6 @@ export async function getCart({ userId, trackingId }) {
   }
 }
 
-
 export async function searchProducts(query) {
   await dbConnect();
   const regexName = new RegExp(
@@ -214,53 +211,6 @@ export async function searchProducts(query) {
     .lean();
   return replaceMongoIdInArray(products);
 }
-
-// export async function getProducts(filCat, query, fillPrice, fillSize) {
-//   await dbConnect();
-
-//   let products = await productModel.find().lean();
-//   let priceFiltered = false;
-
-//   //search for products........
-//   if (query) {
-//     const regexName = new RegExp(
-//       query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"),
-//       "i"
-//     );
-//     products = await productModel.find({ name: { $regex: regexName } }).lean();
-//   }
-
-//   // filter by category .......
-//   if (filCat) {
-//     const filCatToMatch = filCat.split("|");
-
-//     products = products.filter((product) => {
-//       return filCatToMatch.includes(product.category.toString());
-//     });
-//   }
-
-//   // filter by price..........
-//   if (fillPrice) {
-//     const priceArray = fillPrice.split("|");
-//     const min = priceArray[0];
-//     const max = priceArray[1];
-//     products = await productModel
-//       .find({
-//         price: { $gte: min, $lte: max },
-//       })
-//       .lean();
-
-//     priceFiltered = true;
-//   }
-
-//   // filter by size.........
-//   if (fillSize && priceFiltered) {
-//     products = products.filter((product) => product.sizes.includes(fillSize));
-//   } else if (fillSize && !priceFiltered) {
-//     products = await productModel.find({ sizes: { $in: [fillSize] } }).lean();
-//   }
-//   return replaceMongoIdInArray(products);
-// }
 
 export async function getProducts(filCat, query, fillPrice, fillSize) {
   try {
@@ -316,26 +266,6 @@ export async function getProducts(filCat, query, fillPrice, fillSize) {
       }
     }
 
-    // // Proper serialization
-    // const serializedProducts = products.map((product) => ({
-    //   ...product,
-    //   _id: product._id.toString(),
-    //   categoryId: product.categoryId?.toString(),
-    //   manufacturerId: product.manufacturerId?.toString(),
-    //   createdAt: product.createdAt?.toISOString(),
-    //   updatedAt: product.updatedAt?.toISOString(),
-    //   price: {
-    //     usd: product.price?.usd || 0,
-    //     eur: product.price?.eur || 0,
-    //   },
-    //   discountPrice: product.discountPrice
-    //     ? {
-    //         usd: product.discountPrice.usd || undefined,
-    //         eur: product.discountPrice.eur || undefined,
-    //       }
-    //     : undefined,
-    // }));
-
     return replaceMongoIdInArray(products);
   } catch (error) {
     console.error("Error in getProducts:", error);
@@ -344,38 +274,33 @@ export async function getProducts(filCat, query, fillPrice, fillSize) {
 }
 
 export async function getProductById(productId) {
+
   await dbConnect();
   const product = await productModel.findById(productId).lean();
 
   return replaceMongoIdInObject(product);
 }
 
-// export async function getProductByCategory(categoryId) {
-//   try {
-//     await dbConnect();
-//     console.log("Fetching products for category ID:...", categoryId);
+export async function deleteProductById(productId) {
+  try {
+    await dbConnect();
 
-//     // Find products and only select necessary fields for better performance
-//     const products = await productModel
-//       .find({ categoryId: categoryId })
-//       .select("name image price discountPrice ratings reviewsNumber")
-//       .lean();
+    // Find and delete the product
+    const deletedProduct = await productModel
+      .findByIdAndDelete(productId)
+      .lean();
 
-//     if (!products?.length) {
-//       console.log("No products found for category ID:", categoryId);
-//       return [];
-//     }
+    if (!deletedProduct) {
+      throw new Error("Product not found");
+    }
 
-//     const processedProducts = replaceMongoIdInArray(products);
-//     console.log(
-//       `Found ${processedProducts.length} products for category ${categoryId}`
-//     );
-//     return processedProducts;
-//   } catch (error) {
-//     console.error("Error fetching products by category:", error.message);
-//     throw new Error("Failed to fetch products by category");
-//   }
-// }
+    // Return the deleted product (with transformed IDs if needed)
+    return replaceMongoIdInObject(deletedProduct);
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    throw error; // Re-throw the error for the calling function to handle
+  }
+}
 
 export async function getProductByCategory(categoryId) {
   try {
@@ -425,8 +350,6 @@ export async function getTrendingProduct() {
   // Trending products: (Some recent products those ratings are between 4.8 to 5)
   return replaceMongoIdInArray(trendingProduct);
 }
-
-
 
 export const cartCleanUp = async () => {
   const expirationTime = new Date(Date.now() - 20 * 60 * 1000);
@@ -585,10 +508,7 @@ export async function getCardListData(id) {
   }
 }
 
-
 export async function incrementItemQuantity(trackingId, userId, itemId, plus) {
- 
-
   try {
     await dbConnect();
 
@@ -664,8 +584,7 @@ export async function incrementItemQuantity(trackingId, userId, itemId, plus) {
   }
 }
 
-
-export async function removeCardList( userId, trackingId, productId ) {
+export async function removeCardList(userId, trackingId, productId) {
   await dbConnect();
   // Validate productId
   if (!mongoose.Types.ObjectId.isValid(productId)) {
@@ -699,7 +618,6 @@ export async function removeCardList( userId, trackingId, productId ) {
     }
   }
 
-
   if (!trackingId) {
     throw new Error("Tracking ID is required for guest users");
   }
@@ -729,19 +647,6 @@ export async function removeCardList( userId, trackingId, productId ) {
 
   return { success: true, source: "guest", result };
 }
-
-
-export async function removeWishList(userId, productId) {
-  await dbConnect();
-  const user = await userModel.findById(userId);
-  if (!user) {
-    throw new Error("User not found");
-  }
-
-  user.wishlist.pull(new mongoose.Types.ObjectId(productId));
-  await user.save();
-}
-
 
 export const getSummary = async () => {
   await dbConnect();
@@ -874,7 +779,6 @@ export const placeOrder = async (form) => {
     return { success: false };
   }
 };
-
 
 export const clearCardlist = async (userId) => {
   await dbConnect();
