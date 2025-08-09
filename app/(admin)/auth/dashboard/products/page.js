@@ -61,7 +61,7 @@ export default function AllProducts() {
             <tbody>
               {products.map((product) => (
                 <tr
-                  key={product._id}
+                  key={product.id}
                   className="hover:bg-gray-50 transition-all duration-150"
                 >
                   <td className="px-4 py-2 border flex justify-center">

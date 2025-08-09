@@ -3,6 +3,8 @@ import ProductCard from "../shop/ProductCard";
 
 const RelatedProduct = async ({ category }) => {
   const relatedProduct = await getProductByCategory(category);
+
+  console.log('related products....', relatedProduct)
   const newRelatedProduct = relatedProduct.slice(0, 4);
   return (
     <div className="bg-[#f4f3ef]">

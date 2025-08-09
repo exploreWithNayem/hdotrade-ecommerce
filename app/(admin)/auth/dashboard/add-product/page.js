@@ -1,14 +1,8 @@
-// import React from "react";
-
-// export default function page() {
-//   return (
-//     <div className="relative md:ml-64 bg-blueGray-100">This is add product page</div>
-//   );
-// }
-
 "use client";
 
 import { useEffect, useState } from "react";
+
+import JoditRich from "../admin-components/RichText";
 
 export default function AddProductPage() {
   const [form, setForm] = useState({
@@ -26,7 +20,7 @@ export default function AddProductPage() {
     sizes: [],
     colors: [],
     quantity: "",
-    visibility: "public"
+    visibility: "public",
   });
 
   const [imageFile, setImageFile] = useState(null);
@@ -195,7 +189,7 @@ export default function AddProductPage() {
     }
   };
 
-  console.log('form...',form)
+  console.log("form...", form);
 
   const Label = ({ children, required }) => (
     <label className="block text-sm font-medium mb-1">
@@ -296,18 +290,9 @@ export default function AddProductPage() {
 
           <div>
             <Label required>Description</Label>
-            <textarea
-              name="description"
-              required
-              value={form.description}
-              onChange={handleChange}
-              placeholder="Enter detailed product description..."
-              className="w-full min-h-[250px] p-4 border border-gray-300 rounded-lg 
-            focus:ring-2 focus:ring-blue-500 focus:border-transparent
-            transition-all duration-200 resize-y"
-              rows={6}
-            />
+            <JoditRich setForm={setForm} form={form} />
           </div>
+
           <div>
             <Label>Manufacturer</Label>
             <select

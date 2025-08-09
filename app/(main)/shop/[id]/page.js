@@ -7,6 +7,7 @@ export async function generateMetadata(props) {
 
   const { id } = params;
 
+
   const product = await getProductById(id);
 
   return {
@@ -15,7 +16,7 @@ export async function generateMetadata(props) {
     openGraph: {
       images: [
         {
-          url: product?.image[0],
+          url: product?.image,
           alt: "Detail About The Food",
         },
       ],
@@ -26,20 +27,17 @@ export async function generateMetadata(props) {
 export default async function page(props) {
   const params = await props.params;
 
-  const { id, lang } = params;
+  const { id } = params;
 
   const product = await getProductById(id);
 
+  console.log("product...", product);
 
   return (
     <>
       <div>
-        
         <ProductPage product={product} />
-        <RelatedProduct
-          category={product?.category}
-          langCode={lang}
-        />
+        <RelatedProduct category={product?.categoryId} />
       </div>
     </>
   );

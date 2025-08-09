@@ -316,27 +316,27 @@ export async function getProducts(filCat, query, fillPrice, fillSize) {
       }
     }
 
-    // Proper serialization
-    const serializedProducts = products.map((product) => ({
-      ...product,
-      _id: product._id.toString(),
-      categoryId: product.categoryId?.toString(),
-      manufacturerId: product.manufacturerId?.toString(),
-      createdAt: product.createdAt?.toISOString(),
-      updatedAt: product.updatedAt?.toISOString(),
-      price: {
-        usd: product.price?.usd || 0,
-        eur: product.price?.eur || 0,
-      },
-      discountPrice: product.discountPrice
-        ? {
-            usd: product.discountPrice.usd || undefined,
-            eur: product.discountPrice.eur || undefined,
-          }
-        : undefined,
-    }));
+    // // Proper serialization
+    // const serializedProducts = products.map((product) => ({
+    //   ...product,
+    //   _id: product._id.toString(),
+    //   categoryId: product.categoryId?.toString(),
+    //   manufacturerId: product.manufacturerId?.toString(),
+    //   createdAt: product.createdAt?.toISOString(),
+    //   updatedAt: product.updatedAt?.toISOString(),
+    //   price: {
+    //     usd: product.price?.usd || 0,
+    //     eur: product.price?.eur || 0,
+    //   },
+    //   discountPrice: product.discountPrice
+    //     ? {
+    //         usd: product.discountPrice.usd || undefined,
+    //         eur: product.discountPrice.eur || undefined,
+    //       }
+    //     : undefined,
+    // }));
 
-    return serializedProducts;
+    return replaceMongoIdInArray(products);
   } catch (error) {
     console.error("Error in getProducts:", error);
     throw new Error("Failed to fetch products");
@@ -350,11 +350,60 @@ export async function getProductById(productId) {
   return replaceMongoIdInObject(product);
 }
 
-export async function getProductByCategory(category) {
-  await dbConnect();
-  const product = await productModel.find({ category: category }).lean();
+// export async function getProductByCategory(categoryId) {
+//   try {
+//     await dbConnect();
+//     console.log("Fetching products for category ID:...", categoryId);
 
-  return replaceMongoIdInArray(product);
+//     // Find products and only select necessary fields for better performance
+//     const products = await productModel
+//       .find({ categoryId: categoryId })
+//       .select("name image price discountPrice ratings reviewsNumber")
+//       .lean();
+
+//     if (!products?.length) {
+//       console.log("No products found for category ID:", categoryId);
+//       return [];
+//     }
+
+//     const processedProducts = replaceMongoIdInArray(products);
+//     console.log(
+//       `Found ${processedProducts.length} products for category ${categoryId}`
+//     );
+//     return processedProducts;
+//   } catch (error) {
+//     console.error("Error fetching products by category:", error.message);
+//     throw new Error("Failed to fetch products by category");
+//   }
+// }
+
+export async function getProductByCategory(categoryId) {
+  try {
+    await dbConnect();
+    console.log("Fetching products for category ID:", categoryId);
+
+    const products = await productModel
+      .find({ categoryId: categoryId, isActive: true }) // Changed to categoryId to match schema
+      .select(
+        "name image price discountPrice ratings reviewsNumber soldCount quantity isActive"
+      )
+      .sort({ createdAt: -1 }) // Sort by newest first
+      .lean();
+
+    if (!products?.length) {
+      console.log("No active products found for category ID:", categoryId);
+      return [];
+    }
+
+    const processedProducts = replaceMongoIdInArray(products);
+    console.log(
+      `Found ${processedProducts.length} active products for category ${categoryId}`
+    );
+    return processedProducts;
+  } catch (error) {
+    console.error("Error fetching products by category:", error.message);
+    throw new Error("Failed to fetch products by category");
+  }
 }
 
 export async function getNewArivalProduct() {

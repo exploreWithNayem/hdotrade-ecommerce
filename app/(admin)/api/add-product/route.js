@@ -17,6 +17,8 @@ export const POST = async (request) => {
 
     const data = await request.json();
 
+    console.log("data........", data);
+
     // Required field validation
     const requiredFields = ["name", "price", "description", "quantity"];
     const missingFields = requiredFields.filter((field) => {

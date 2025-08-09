@@ -8,12 +8,17 @@ import { FaWhatsapp } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useEffect, useState } from "react";
+import placeholder from "@/public/client/banner/placeholder.png";
 const ProductPage = ({ product }) => {
-  console.log(product);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="max-w-[1280px] mx-auto px-3 pb-[50px]">
-      {/* Link Tab */}
       <div className="my-16 flex items-center gap-1">
         <p className="text-[16px]">Home</p>
         <MdKeyboardArrowRight className="text-xl" />
@@ -27,10 +32,11 @@ const ProductPage = ({ product }) => {
         {/* Image */}
         <div className="border border-gray-600 p-11 rounded-2xl flex justify-center">
           <Image
-            src={product?.image["0"]}
+            src={product?.image || placeholder}
             width={700}
             height={700}
             alt={product?.name}
+            priority
           />
         </div>
         {/* Card */}
@@ -56,7 +62,7 @@ const ProductPage = ({ product }) => {
               Answered Questions
             </p>
             <p className="font-bold text-2xl mb-4">
-              ${product?.discount_price}
+              {/* ${product?.discount_price} */}
             </p>
             <p className="font-bold text-[16px] mb-4">Quantity</p>
             <FunctionBtn />
@@ -102,9 +108,14 @@ const ProductPage = ({ product }) => {
               Additional information
             </h5>
           </div>
-          <p className="md:w-[570px] mt-10 text-gray-600">
-            {product?.description}
-          </p>
+          {/* Fixed description section */}
+          <div className="md:w-[570px] mt-10 text-gray-600">
+            {isClient ? (
+              <div dangerouslySetInnerHTML={{ __html: product?.description }} />
+            ) : (
+              <div className="min-h-[200px] bg-gray-100 animate-pulse rounded"></div>
+            )}
+          </div>
         </div>
         <div className="pt-7 lg:pt-0">
           <button className="flex items-center justify-center gap-2 w-full border border-red-600 py-3 font-bold text-[16px] rounded-full cursor-pointer mb-3.5">

@@ -26,7 +26,7 @@ export default async function RootLayout(props) {
   // const language = await getLang(lang);
   await cartCleanUp();
   return (
-    <html lang="en" className="bg-[#ffffff] ">
+    <html suppressHydrationWarning lang="en" className="bg-[#ffffff] ">
       <SessionProvider session={session}>
         <CartProvider>
           <body className={myFont.className} suppressHydrationWarning={true}>

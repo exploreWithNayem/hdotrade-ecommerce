@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AddCard from "./AddCard";
 import { InStock } from "@/public/icons/icons";
-import placeholder from "@/public/client/banner/placeholder.png"
+import placeholder from "@/public/client/banner/placeholder.png";
 
 export default function ProductCard({ product, relatedProduct = false }) {
   return (
@@ -27,9 +27,6 @@ export default function ProductCard({ product, relatedProduct = false }) {
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-contain transition-transform duration-300 hover:scale-105"
-            onError={(e) => {
-              e.currentTarget.src = placeholder;
-            }}
           />
         </div>
 
@@ -37,7 +34,7 @@ export default function ProductCard({ product, relatedProduct = false }) {
         <div className="flex-grow flex flex-col justify-between pt-4">
           {/* Title */}
           <p className="font-medium text-xl md:text-2xl my-2 line-clamp-2">
-            <Link href={`/shop/${product?._id}`} className="hover:text-red-600">
+            <Link href={`/shop/${product?.id}`} className="hover:text-red-600">
               {product?.name}
             </Link>
           </p>
@@ -57,12 +54,12 @@ export default function ProductCard({ product, relatedProduct = false }) {
           {/* Buttons */}
           <div className="grid grid-cols-2 gap-3 mt-4">
             <button className="font-bold text-sm md:text-[16px] text-red-600 border border-red-600 rounded-full py-2 md:py-3 cursor-pointer transition-all duration-300 hover:bg-red-600 hover:text-white">
-              <Link href={`/shop/${product?._id}`} className="block w-full">
+              <Link href={`/shop/${product?.id}`} className="block w-full">
                 View Details
               </Link>
             </button>
 
-            <AddCard quantity={product?.quantity} productId={product?._id} />
+            <AddCard quantity={product?.quantity} productId={product?.id} />
           </div>
         </div>
       </div>

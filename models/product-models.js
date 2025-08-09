@@ -1,40 +1,3 @@
-// import mongoose, { Schema } from "mongoose";
-
-// const productSchema = new Schema({
-//   name: { type: String, required: true },
-//   image: { type: [String], required: false },
-//   price: {
-//     usd: { type: Number, required: true },
-//     eur: { type: Number, required: true },
-//     required: false,
-//   },
-//   discount_price: {
-//     usd: { type: Number },
-//     eur: { type: Number },
-//     required: false,
-//   },
-//   reviewsNumber: { type: Number, required: false },
-//   ratings: { type: Number, required: false },
-//   manufacturerId: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "manufacturers",
-//     required: false,
-//   },
-//   categoryId: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: "categories",
-//     required: false,
-//   },
-//   description: { type: String, required: true },
-
-//   soldCounts: { type: Number, default: 0 },
-//   published: { type: Date, default: Date.now },
-//   quantity: { type: Number, required: true },
-
-// });
-
-// export const productModel =
-//   mongoose.models.products ?? mongoose.model("products", productSchema);
 
 import mongoose from "mongoose";
 
@@ -112,12 +75,10 @@ const productSchema = new mongoose.Schema(
       index: true,
     },
     description: {
+      required: false,
       type: String,
-      required: [true, "Product description is required"],
-      trim: true,
-      minlength: [10, "Description must be at least 10 characters long"],
-      maxlength: [2000, "Description cannot exceed 2000 characters"],
     },
+
     soldCount: {
       type: Number,
       required: false,
