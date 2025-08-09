@@ -2,12 +2,10 @@ import Link from "next/link";
 import List from "./List";
 import NoCard from "./NoCard";
 
-const CardList = ({ langCode, products, trackingId }) => {
-  // Calculate subtotal
+const CardList = ({ products, trackingId }) => {
   const subtotal = products
     .reduce((total, p) => total + p.discount_price * p.cartQuantity, 0)
     .toFixed(2);
-
 
   return (
     <div className="flex justify-center items-center  py-10 px-4">
@@ -15,23 +13,14 @@ const CardList = ({ langCode, products, trackingId }) => {
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold">Shopping Cart</h2>
-          {products.length > 0 && (
-            <button className="text-xs text-red-500 hover:underline">
-              Remove all
-            </button>
-          )}
         </div>
 
         {/* Product list */}
         <div className="space-y-4">
           {products.length > 0 ? (
             products.map((product, index) => (
-              <List
-                product={product}
-                langCode={langCode}
-                key={index}
-                trackingId={trackingId}
-              />
+              <List product={product} key={index} trackingId={trackingId} />
+            
             ))
           ) : (
             <div className="flex justify-center">
@@ -58,7 +47,7 @@ const CardList = ({ langCode, products, trackingId }) => {
         <div className="flex justify-center mt-2">
           {products.length > 0 ? (
             <Link
-              href={`/${langCode}/checkout`}
+              href={`/checkout`}
               className="w-full py-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 text-white font-semibold text-sm text-center hover:from-blue-500 hover:to-blue-700 transition duration-300"
             >
               Checkout

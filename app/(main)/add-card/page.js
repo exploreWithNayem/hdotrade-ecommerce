@@ -1,11 +1,9 @@
 import { cookies } from "next/headers";
 import CardList from "@/components/addcard/CardList";
 
-export default async function CartPage({ params }) {
+export default async function CartPage() {
   const cookieStore = await cookies();
   const trackingId = cookieStore.get("trackingId")?.value;
-
-  const { lang } = await params;
 
   let products = [];
 
@@ -30,14 +28,11 @@ export default async function CartPage({ params }) {
     }
   }
 
+  console.log("list products...", products);
 
   return (
     <div>
-      <CardList
-        langCode={lang}
-        products={products}
-        trackingId={trackingId}
-      />
+      <CardList products={products} trackingId={trackingId} />
     </div>
   );
 }

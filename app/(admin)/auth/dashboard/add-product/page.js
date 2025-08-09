@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { toast } from "react-toastify";
 import JoditRich from "../admin-components/RichText";
 
 export default function AddProductPage() {
@@ -158,7 +158,10 @@ export default function AddProductPage() {
 
       const data = await res.json();
       if (res.ok) {
-        alert("Product added successfully!");
+        toast.success("Product added successfully!", {
+          position: "bottom-right",
+        });
+
         // Reset form after successful submission
         setForm({
           name: "",
@@ -189,8 +192,6 @@ export default function AddProductPage() {
     }
   };
 
-  console.log("form...", form);
-
   const Label = ({ children, required }) => (
     <label className="block text-sm font-medium mb-1">
       {children} {required && <span className="text-red-500">*</span>}
@@ -200,7 +201,7 @@ export default function AddProductPage() {
   return (
     <div className="relative md:ml-64 bg-blueGray-100">
       <div className="max-w-6xl mx-auto p-6 bg-white rounded shadow mt-10">
-        <h2 className="text-2xl font-bold mb-6">Add Product</h2>
+        <h2 className="text-2xl text-[#0eadef]  font-bold mb-6">Add Product</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <Label required>Name</Label>
